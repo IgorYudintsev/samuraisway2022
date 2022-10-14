@@ -1,14 +1,17 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import {Header} from "./Header";
-import {Technologies} from "./Technologies";
+import {Footer} from "./Footer";
+import {MainContent} from "./MainContent";
+import {Nav} from "./Nav";
 
 function App() {
     return (
-        <div className="App">
+        <div className="AppWrapper">
             <Header/>
-            <Technologies/>
+            <Nav/>
+            <MainContent/>
+            <Footer/>
         </div>
     );
 }
