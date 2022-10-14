@@ -1,6 +1,7 @@
 import React from 'react';
 
 export const Technologies = () => {
+
     return (
     <ul>
         <li>HTML</li>
