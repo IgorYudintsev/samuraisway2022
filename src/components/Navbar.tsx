@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const Nav = () => {
+export const Navbar = () => {
     return (
         <div className={'Nav'}>
             <div>Messages</div>

@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const MainContent = () => {
+export const Profile = () => {
 
     return (
         <div className={'MainContent'}>
