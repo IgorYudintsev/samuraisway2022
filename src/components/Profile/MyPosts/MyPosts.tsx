@@ -12,9 +12,9 @@ export const MyPosts = () => {
                 <button>remove post</button>
             </div>
 
-            <Post/>
-            <Post/>
-            <Post/>
+            <Post message={'Hi, how are you'}/>
+            <Post message={'I`ts my first post'}/>
+
         </MyPostsWrapper>
     );
 };
