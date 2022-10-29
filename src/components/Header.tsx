@@ -1,11 +1,22 @@
 import React from 'react';
+import styled from "styled-components";
 
 export const Header = () => {
     return (
         <div className={'Header'}>
+            <ImgWrapper>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/d/db/Zeronet_logo.png"
+                     alt="logo"/>
+            </ImgWrapper>
 
-            <img className={'Logo'} src="https://upload.wikimedia.org/wikipedia/commons/d/db/Zeronet_logo.png" alt="logo"/>
         </div>
     );
 };
+
+const ImgWrapper = styled.span`
+  &>img{
+    width: 50px;
+  }
+
+`
 
