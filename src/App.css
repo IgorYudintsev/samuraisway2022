@@ -1,10 +1,10 @@
-.App {
-  text-align: center;
-}
+/*.App {*/
+/*  text-align: center;*/
+/*}*/
 
 .AppWrapper{
 display: grid;
-  grid-template-rows: 2fr 5fr 2fr;
+  grid-template-rows: 0.3fr 5fr 2fr;
   grid-template-columns: 1fr 5fr ;
   grid-template-areas: 'h h h'
                        'n m m'
@@ -14,7 +14,7 @@ display: grid;
 
 .Header{
   grid-area: h;
-  /*background-color: yellow;*/
+  display: flex;
 }
 
 .Nav{
@@ -31,13 +31,6 @@ display: grid;
   grid-area: f;
   /*background-color: lightcyan;*/
 }
-
-
-.Logo{
-  width: 50px;
-}
-
-
 
 .App-logo {
   height: 40vmin;

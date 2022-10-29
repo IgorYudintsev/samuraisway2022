@@ -1,4 +1,5 @@
 import React from 'react';
+import {MyPosts} from "./MyPosts/MyPosts";
 
 export const Profile = () => {
 
@@ -10,6 +11,7 @@ export const Profile = () => {
                 <li>TS</li>
                 <li>REACT</li>
             </ul>
+            <MyPosts/>
         </div>
     );
 };

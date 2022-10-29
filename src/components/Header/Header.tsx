@@ -14,7 +14,9 @@ export const Header = () => {
 };
 
 const ImgWrapper = styled.span`
-  &>img{
+  align-items: center;
+
+  & > img {
     width: 50px;
   }
 
