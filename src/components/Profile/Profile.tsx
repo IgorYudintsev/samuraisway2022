@@ -1,5 +1,6 @@
 import React from 'react';
 import {MyPosts} from "./MyPosts/MyPosts";
+import {ProfileInfo} from "./MyPosts/ProfileInfo";
 
 export const Profile = () => {
 
@@ -11,6 +12,7 @@ export const Profile = () => {
                 <li>TS</li>
                 <li>REACT</li>
             </ul>
+            <ProfileInfo/>
             <MyPosts/>
         </div>
     );

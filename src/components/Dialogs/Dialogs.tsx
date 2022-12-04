@@ -1,19 +1,21 @@
 import React from 'react';
 import styled from "styled-components";
 import {NavLink} from "react-router-dom";
+import {DialogItem} from "./DialogItem";
+import {Message} from "./Message";
 
 export const Dialogs = () => {
     return (
         <Wrapper>
             <Left>
-                <div><NavLink to={'/dialogs/1'}>Igor</NavLink></div>
-                <div><NavLink to={'/dialogs/2'}>Olga</NavLink></div>
-                <div><NavLink to={'/dialogs/3'}>Sasha</NavLink></div>
+                <DialogItem name={'Igor'} id={1}/>
+                <DialogItem name={'Olga'} id={2}/>
+                <DialogItem name={'Sasha'} id={3}/>
             </Left>
             <Right>
-                <div>Hi</div>
-                <div>How are you&</div>
-                <div>hellow</div>
+                <Message message={'Hi'}/>
+                <Message message={'How are you?'}/>
+                <Message message={'Hellow'}/>
             </Right>
         </Wrapper>
     );
