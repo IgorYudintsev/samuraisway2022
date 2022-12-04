@@ -1,13 +1,14 @@
 import React from 'react';
 import styled from "styled-components";
+import {NavLink} from "react-router-dom";
 
 export const Dialogs = () => {
     return (
         <Wrapper>
             <Left>
-                <div>Igor</div>
-                <div>Olga</div>
-                <div>Sasha</div>
+                <div><NavLink to={'/dialogs/1'}>Igor</NavLink></div>
+                <div><NavLink to={'/dialogs/2'}>Olga</NavLink></div>
+                <div><NavLink to={'/dialogs/3'}>Sasha</NavLink></div>
             </Left>
             <Right>
                 <div>Hi</div>
