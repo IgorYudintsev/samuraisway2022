@@ -6,47 +6,55 @@ import {Message} from "./Message";
 
 export const Dialogs = () => {
 
-    const dialogsData=[
+    const dialogsData = [
         {
-            id:1,
-            name:'Igor'
+            id: 1,
+            name: 'Igor'
         },
         {
-            id:2,
-            name:'Olga'
+            id: 2,
+            name: 'Olga'
         },
         {
-            id:3,
-            name:'Sasha'
+            id: 3,
+            name: 'Sasha'
         },
     ]
 
-    const messagesData=[
+    const messagesData = [
         {
-            id:1,
-            message:'Hi'
+            id: 1,
+            message: 'Hi'
         },
         {
-            id:2,
-            message:'How are you?'
+            id: 2,
+            message: 'How are you?'
         },
         {
-            id:3,
-            message:'Hellow'
+            id: 3,
+            message: 'Hellow'
         },
     ]
+
+    const dialogs = dialogsData.map(d => {
+        return (
+            <DialogItem name={d.name} id={d.id}/>
+        )
+    })
+
+    const messages = messagesData.map(m => {
+        return (
+            <Message message={m.message}/>
+        )
+    })
 
     return (
         <Wrapper>
             <Left>
-                <DialogItem name={dialogsData[0].name} id={dialogsData[0].id}/>
-                <DialogItem name={dialogsData[1].name} id={dialogsData[1].id}/>
-                <DialogItem name={dialogsData[2].name} id={dialogsData[2].id}/>
+                {dialogs}
             </Left>
             <Right>
-                <Message message={messagesData[0].message}/>
-                <Message message={messagesData[1].message}/>
-                <Message message={messagesData[2].message}/>
+                {messages}
             </Right>
         </Wrapper>
     );
