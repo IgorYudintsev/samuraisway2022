@@ -5,17 +5,48 @@ import {DialogItem} from "./DialogItem";
 import {Message} from "./Message";
 
 export const Dialogs = () => {
+
+    const dialogsData=[
+        {
+            id:1,
+            name:'Igor'
+        },
+        {
+            id:2,
+            name:'Olga'
+        },
+        {
+            id:3,
+            name:'Sasha'
+        },
+    ]
+
+    const messagesData=[
+        {
+            id:1,
+            message:'Hi'
+        },
+        {
+            id:2,
+            message:'How are you?'
+        },
+        {
+            id:3,
+            message:'Hellow'
+        },
+    ]
+
     return (
         <Wrapper>
             <Left>
-                <DialogItem name={'Igor'} id={1}/>
-                <DialogItem name={'Olga'} id={2}/>
-                <DialogItem name={'Sasha'} id={3}/>
+                <DialogItem name={dialogsData[0].name} id={dialogsData[0].id}/>
+                <DialogItem name={dialogsData[1].name} id={dialogsData[1].id}/>
+                <DialogItem name={dialogsData[2].name} id={dialogsData[2].id}/>
             </Left>
             <Right>
-                <Message message={'Hi'}/>
-                <Message message={'How are you?'}/>
-                <Message message={'Hellow'}/>
+                <Message message={messagesData[0].message}/>
+                <Message message={messagesData[1].message}/>
+                <Message message={messagesData[2].message}/>
             </Right>
         </Wrapper>
     );

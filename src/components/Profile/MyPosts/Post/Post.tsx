@@ -4,6 +4,7 @@ import {ProfileInfo} from "../ProfileInfo";
 
 type PropsType = {
     message: string
+    likesCount: number
 }
 
 export const Post = (props: PropsType) => {
@@ -14,7 +15,7 @@ export const Post = (props: PropsType) => {
             {/*    alt="ava"/>*/}
 
             <span>{props.message}</span>
-            <div>Like</div>
+            <div>Like: {props.likesCount}</div>
         </PostWrapper>
     );
 };
