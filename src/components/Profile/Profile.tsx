@@ -1,8 +1,14 @@
 import React from 'react';
 import {MyPosts} from "./MyPosts/MyPosts";
 import {ProfileInfo} from "./MyPosts/ProfileInfo";
+import {PostType} from "../../index";
 
-export const Profile = () => {
+
+type PostsType={
+    posts:PostType[]
+}
+
+export const Profile = (props:PostsType) => {
 
     return (
         <div className={'MainContent'}>
@@ -13,7 +19,7 @@ export const Profile = () => {
                 <li>REACT</li>
             </ul>
             <ProfileInfo/>
-            <MyPosts/>
+            <MyPosts posts={props.posts}/>
         </div>
     );
 };

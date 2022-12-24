@@ -1,24 +1,16 @@
 import React from 'react';
 import styled from "styled-components";
 import {Post} from "./Post/Post";
+import {PostType} from "../../../index";
 
-export const MyPosts = () => {
 
-    const postsData = [
-        {
-            id: 1,
-            message: 'Hi, how are you',
-            likesCount: 0
-        },
-        {
-            id: 2,
-            message: 'I`ts my first post',
-            likesCount: 13
-        },
+type PostsType={
+    posts:PostType[]
+}
 
-    ]
+export const MyPosts = (props:PostsType) => {
 
-    const posts = postsData.map(post => {
+    const posts = props.posts.map(post => {
         return (
             <Post message={post.message} likesCount={post.likesCount}/>
         )

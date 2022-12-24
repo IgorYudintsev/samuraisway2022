@@ -3,46 +3,22 @@ import styled from "styled-components";
 import {NavLink} from "react-router-dom";
 import {DialogItem} from "./DialogItem";
 import {Message} from "./Message";
+import {DialogsType, MessageType, PostType} from "../../index";
 
-export const Dialogs = () => {
+type dataType = {
+    dialogs: DialogsType[]
+    messages: MessageType[]
+}
 
-    const dialogsData = [
-        {
-            id: 1,
-            name: 'Igor'
-        },
-        {
-            id: 2,
-            name: 'Olga'
-        },
-        {
-            id: 3,
-            name: 'Sasha'
-        },
-    ]
+export const Dialogs = (props:dataType) => {
 
-    const messagesData = [
-        {
-            id: 1,
-            message: 'Hi'
-        },
-        {
-            id: 2,
-            message: 'How are you?'
-        },
-        {
-            id: 3,
-            message: 'Hellow'
-        },
-    ]
-
-    const dialogs = dialogsData.map(d => {
+    const dialogs = props.dialogs.map(d => {
         return (
             <DialogItem name={d.name} id={d.id}/>
         )
     })
 
-    const messages = messagesData.map(m => {
+    const messages = props.messages.map(m => {
         return (
             <Message message={m.message}/>
         )
