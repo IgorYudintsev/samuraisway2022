@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from "styled-components";
 import {Post} from "./Post/Post";
-import {PostType} from "../../../index";
+import {PostType} from "../../../redux/state";
+
 
 
 type PostsType={

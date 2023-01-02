@@ -5,24 +5,21 @@ import {Footer} from "./Footer";
 import {Profile} from "./components/Profile/Profile";
 import {Navbar} from "./components/Navbar/Navbar";
 import {Dialogs} from "./components/Dialogs/Dialogs";
-import {Route, Routes } from 'react-router-dom';
-import {DialogsType, MessageType, PostType} from "./index";
+import {Route, Routes} from 'react-router-dom';
+import {StateType} from "./redux/state";
 
-type dataType={
-    posts:PostType[]
-    dialogs:DialogsType[]
-    messages:MessageType[]
+type appState={
+    state:StateType
 }
 
-
-function App(props:dataType) {
+function App(props:appState) {
     return (
         <div className="AppWrapper">
             <Header/>
             <Navbar/>
             <Routes>
-              <Route path={'/profile'} element={ <Profile posts={props.posts}/>}/>
-              <Route path={'/dialogs'} element={  <Dialogs dialogs={props.dialogs} messages={props.messages}/>}/>
+              <Route path={'/profile'} element={ <Profile state={props.state.profilePage.posts}/>}/>
+              <Route path={'/dialogs'} element={  <Dialogs state={props.state.messagesPage}/>}/>
 
             </Routes>
 
