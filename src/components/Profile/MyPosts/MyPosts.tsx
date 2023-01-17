@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import styled from "styled-components";
 import {Post} from "./Post/Post";
 import {PostType} from "../../../redux/state";
@@ -11,6 +11,15 @@ type PostsType={
 
 export const MyPosts = (props:PostsType) => {
 
+    let newPostElement=useRef<HTMLTextAreaElement>(null)
+
+    const addPost=()=>{
+        if(newPostElement.current){
+            let text=newPostElement.current.value
+            alert(text)
+        }
+    }
+
     const posts = props.posts.map(post => {
         return (
             <Post message={post.message} likesCount={post.likesCount}/>
@@ -20,9 +29,9 @@ export const MyPosts = (props:PostsType) => {
     return (
         <MyPostsWrapper>
             <div>MyPosts</div>
-            <textarea cols={30} rows={10}/>
+            <textarea cols={30} rows={10} ref={newPostElement}/>
             <div>
-                <button>add post</button>
+                <button onClick={addPost}>add post</button>
                 <button>remove post</button>
             </div>
             {posts}
