@@ -4,19 +4,19 @@ import {Post} from "./Post/Post";
 import {PostType} from "../../../redux/state";
 
 
-
-type PostsType={
-    posts:PostType[]
+type PostsType = {
+    posts: PostType[]
+    addPost: (postMessage: string) => void
 }
 
-export const MyPosts = (props:PostsType) => {
+export const MyPosts = (props: PostsType) => {
 
-    let newPostElement=useRef<HTMLTextAreaElement>(null)
+    let newPostElement = useRef<HTMLTextAreaElement>(null)
 
-    const addPost=()=>{
-        if(newPostElement.current){
-            let text=newPostElement.current.value
-            alert(text)
+    const addPost = () => {
+        if (newPostElement.current) {
+            let text = newPostElement.current.value
+            props.addPost(text)
         }
     }
 

@@ -7,6 +7,7 @@ import {PostType} from "../../redux/state";
 
 type StateType={
     state:PostType[]
+    addPost:(postMessage:string)=>void
 }
 
 export const Profile = (props:StateType) => {
@@ -20,7 +21,7 @@ export const Profile = (props:StateType) => {
                 <li>REACT</li>
             </ul>
             <ProfileInfo/>
-            <MyPosts posts={props.state}/>
+            <MyPosts posts={props.state} addPost={props.addPost}/>
         </div>
     );
 };
