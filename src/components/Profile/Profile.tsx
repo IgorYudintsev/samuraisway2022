@@ -1,13 +1,14 @@
 import React from 'react';
 import {MyPosts} from "./MyPosts/MyPosts";
 import {ProfileInfo} from "./MyPosts/ProfileInfo";
-import {PostType} from "../../redux/state";
+import {PostType, profilePageType} from "../../redux/state";
 
 
 
 type StateType={
-    state:PostType[]
-    addPost:(postMessage:string)=>void
+    profilePage:profilePageType
+    addPost:()=>void
+    updateNewPostText:(newText:string)=>void
 }
 
 export const Profile = (props:StateType) => {
@@ -21,7 +22,12 @@ export const Profile = (props:StateType) => {
                 <li>REACT</li>
             </ul>
             <ProfileInfo/>
-            <MyPosts posts={props.state} addPost={props.addPost}/>
+            <MyPosts
+                posts={props.profilePage.posts}
+                newPostText={props.profilePage.newPostText}
+                addPost={props.addPost}
+                updateNewPostText={props.updateNewPostText}
+            />
         </div>
     );
 };

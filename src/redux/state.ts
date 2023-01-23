@@ -14,16 +14,17 @@ export type MessageType = {
     id: number,
     message: string
 }
-export type profilePageType={
-    posts:PostType[]
+export type profilePageType = {
+    posts: PostType[]
+    newPostText: string
 }
-export type messagesPageType={
-    messages:MessageType[]
-    dialogs:DialogsType[]
+export type messagesPageType = {
+    messages: MessageType[]
+    dialogs: DialogsType[]
 }
 export type StateType = {
-    profilePage:profilePageType
-    messagesPage:messagesPageType
+    profilePage: profilePageType
+    messagesPage: messagesPageType
 }
 
 let state: StateType = {
@@ -40,7 +41,7 @@ let state: StateType = {
                 likesCount: 13
             },
         ],
-
+        newPostText: 'it-Kamasutra'
     },
     messagesPage: {
         messages: [
@@ -75,17 +76,23 @@ let state: StateType = {
 
 }
 
-export const addPost=(postMessage:string)=>{
-    console.log('jninmnklm')
-    let newPost= {
+export const addPost = () => {
+    let newPost = {
         id: 3,
-        message: postMessage,
+        message: state.profilePage.newPostText,
         likesCount: 0
     }
     state.profilePage.posts.push(newPost)
+    state.profilePage.newPostText=''
     rerenderEntireTree(state)
 }
 
+export const updateNewPostText=(newText:string)=>{
+      state.profilePage.newPostText=newText
+    rerenderEntireTree(state)
+}
+// @ts-ignore
+Window.state=state
 
 export default state
 
