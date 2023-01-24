@@ -9,18 +9,18 @@ import state, {addPost, updateNewPostText} from "./redux/state";
 
 
 
-const root = ReactDOM.createRoot(
-    document.getElementById('root') as HTMLElement
-);
-
-
-export let rerenderEntireTree=(state:any)=>{
-    root.render(
-        <BrowserRouter>
-            <App state={state} addPost={addPost} updateNewPostText={updateNewPostText}/>
-        </BrowserRouter>
-    );
-}
+// const root = ReactDOM.createRoot(
+//     document.getElementById('root') as HTMLElement
+// );
+//
+//
+// export let rerenderEntireTree=(state:any)=>{
+//     root.render(
+//         <BrowserRouter>
+//             <App state={state} addPost={addPost} updateNewPostText={updateNewPostText}/>
+//         </BrowserRouter>
+//     );
+// }
 
 
 

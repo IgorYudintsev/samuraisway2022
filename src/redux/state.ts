@@ -1,6 +1,3 @@
-import {rerenderEntireTree} from "../render";
-
-
 export type  PostType = {
     id: number,
     message: string,
@@ -25,6 +22,11 @@ export type messagesPageType = {
 export type StateType = {
     profilePage: profilePageType
     messagesPage: messagesPageType
+}
+
+
+let rerenderEntireTree = (state: StateType) => {
+    console.log('state was rerendered')
 }
 
 let state: StateType = {
@@ -83,16 +85,24 @@ export const addPost = () => {
         likesCount: 0
     }
     state.profilePage.posts.push(newPost)
-    state.profilePage.newPostText=''
+    state.profilePage.newPostText = ''
     rerenderEntireTree(state)
 }
 
-export const updateNewPostText=(newText:string)=>{
-      state.profilePage.newPostText=newText
+export const updateNewPostText = (newText: string) => {
+    state.profilePage.newPostText = newText
     rerenderEntireTree(state)
 }
+
+
+export const suscribe = (observer: Function) => {
+    // @ts-ignore
+    rerenderEntireTree = observer
+}
+
+
 // @ts-ignore
-Window.state=state
+Window.state = state
 
 export default state
 
