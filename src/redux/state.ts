@@ -28,8 +28,9 @@ export type StoreType = {
     _state: StateType,
     getState: () => StateType,
     _callSubscriber: (state: StateType) => void,
-    addPost: () => void,
-    updateNewPostText: (newText: string) => void
+    dispatch:(action:any)=>void,
+    // addPost: () => void,
+    // updateNewPostText: (newText: string) => void
     subscribe: (observer: Function) => void
 }
 let store = {
@@ -80,31 +81,34 @@ let store = {
             ],
         }
     },
-    getState() {
-        return this._state
-    },
     _callSubscriber(state: StateType) {
         console.log('state was rerendered')
     },
-    addPost() {
-        let newPost = {
-            id: 3,
-            //message: newText,
-            message: this._state.profilePage.newPostText,
-            likesCount: 0
-        }
-        this._state.profilePage.posts.push(newPost)
-        this._state.profilePage.newPostText = ''
-        this._callSubscriber(store._state)
-    },
-    updateNewPostText(newText: string) {
-        this._state.profilePage.newPostText = newText
-        this._callSubscriber(store._state)
+    getState() {
+        return this._state
     },
     subscribe(observer: Function) {
         // @ts-ignore
         this._callSubscriber = observer
+    },
+    dispatch(action: any) {
+             if (action.type === 'ADD-POST') {
+            let newPost = {
+                id: 3,
+                //message: newText,
+                message: this._state.profilePage.newPostText,
+                likesCount: 0
+            }
+            this._state.profilePage.posts.push(newPost)
+            this._state.profilePage.newPostText = ''
+            this._callSubscriber(store._state)
+        }else if(action.type === 'UPDATE-NEWPOST'){
+            this._state.profilePage.newPostText = action.newText
+            this._callSubscriber(store._state)
+        }
     }
+
+
 }
 
 // @ts-ignore
