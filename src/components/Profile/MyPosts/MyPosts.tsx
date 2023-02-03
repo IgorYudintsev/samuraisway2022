@@ -1,7 +1,8 @@
 import React, {useRef} from 'react';
 import styled from "styled-components";
 import {Post} from "./Post/Post";
-import {addPostAC, PostType, updatePostsAC} from "../../../redux/state";
+import { PostType} from "../../../redux/state";
+import {addPostAC, updatePostsAC} from "../../../redux/profile-reducer";
 
 
 type PostsType = {
