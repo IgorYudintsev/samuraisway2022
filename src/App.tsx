@@ -27,7 +27,12 @@ function App(props:appState) {
                   // addPost={props.addPost}
                   // updateNewPostText={props.updateNewPostText}
               />}/>
-              <Route path={'/dialogs'} element={  <Dialogs state={props.state.messagesPage}/>}/>
+              <Route path={'/dialogs'} element={
+                  <Dialogs state={props.state.dialogsPage}
+                  dispatch={props.dispatch}
+                  />
+
+              }/>
 
             </Routes>
 

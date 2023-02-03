@@ -1,29 +1,37 @@
-import React from 'react';
+import React, {ChangeEvent} from 'react';
 import styled from "styled-components";
 import {DialogItem} from "./DialogItem";
 import {Message} from "./Message";
-import {messagesPageType} from "../../redux/state";
+import {messagesPageType, sendMessageAC, updateNewMessageBodyCreatorAC} from "../../redux/state";
 
 
 type StateType = {
     state: messagesPageType
+    dispatch: (action: any) => void
     // dialogs: DialogsType[]
     // messages: MessageType[]
 }
 
-export const Dialogs = (props:StateType) => {
-
+export const Dialogs = (props: StateType) => {
+    const newMessageBody = props.state.newMessageText
     const dialogs = props.state.dialogs.map(d => {
         return (
             <DialogItem name={d.name} id={d.id}/>
         )
     })
-
     const messages = props.state.messages.map(m => {
         return (
             <Message message={m.message}/>
         )
     })
+
+    const onSendmessageClickkhandler = () => {
+        props.dispatch(sendMessageAC())
+    }
+
+    const onNewMessageChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+        props.dispatch(updateNewMessageBodyCreatorAC(e.currentTarget.value))
+    }
 
     return (
         <Wrapper>
@@ -32,6 +40,14 @@ export const Dialogs = (props:StateType) => {
             </Left>
             <Right>
                 {messages}
+                <div><textarea
+                    placeholder={'Enter your message'}
+                    value={newMessageBody}
+                    onChange={onNewMessageChange}
+                /></div>
+                <div>
+                    <button onClick={onSendmessageClickkhandler}>Add</button>
+                </div>
             </Right>
         </Wrapper>
     );
