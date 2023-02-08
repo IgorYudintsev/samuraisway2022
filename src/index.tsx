@@ -6,8 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import {BrowserRouter} from "react-router-dom";
 
 import {store} from "./redux/redux-store";
-import {messagesPageType, profilePageType, StateType} from "./redux/store";
-import {EmptyObject} from "redux";
+import {ContextProvider} from "./StoreContext";
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
@@ -18,10 +17,14 @@ export let rerenderEntireTree = (state: any) => {
 
     root.render(
         <BrowserRouter>
-            <App
-                state={state}
-                dispatch={store.dispatch.bind(store)}
-            />
+            {/*<StoreContext.Provider value={store}>*/}
+            {/*    <App/>*/}
+            {/*</StoreContext.Provider>*/}
+
+            <ContextProvider store={store}>
+                <App/>
+            </ContextProvider>
+
         </BrowserRouter>
     );
 }

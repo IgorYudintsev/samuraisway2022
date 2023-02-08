@@ -1,12 +1,10 @@
 import React from 'react';
 import {ProfileInfo} from "./MyPosts/ProfileInfo";
-import {profilePageType} from "../../redux/store";
 import {MyPostsContainer} from "./MyPosts/MyPostsContainer";
 
 
 type StateType = {
-    profilePage: profilePageType
-    dispatch:(action:any)=>void
+
 }
 
 export const Profile = (props: StateType) => {
@@ -21,11 +19,7 @@ export const Profile = (props: StateType) => {
             </ul>
             <ProfileInfo/>
 
-            <MyPostsContainer
-                posts={props.profilePage.posts}
-                newPostText={props.profilePage.newPostText}
-                dispatch={props.dispatch}
-            />
+            <MyPostsContainer/>
         </div>
     );
 };

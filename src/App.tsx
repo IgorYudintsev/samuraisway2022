@@ -11,8 +11,8 @@ import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
 
 
 type appState = {
-    state: StateType
-    dispatch: (action: any) => void
+    // state: StateType
+    // dispatch: (action: any) => void
 }
 
 function App(props: appState) {
@@ -23,8 +23,8 @@ function App(props: appState) {
             <Navbar/>
             <Routes>
                 <Route path={'/profile'} element={<Profile
-                    profilePage={props.state.profilePage}
-                    dispatch={props.dispatch}
+                    // profilePage={props.state.profilePage}
+                    // dispatch={props.dispatch}
                 />}/>
                 <Route path={'/dialogs'} element={
                     // <Dialogs
@@ -32,8 +32,8 @@ function App(props: appState) {
                     //     dispatch={props.dispatch}
                     // />
                     <DialogsContainer
-                    state={props.state.dialogsPage}
-                    dispatch={props.dispatch}
+                    // state={props.state.dialogsPage}
+                    // dispatch={props.dispatch}
                     />
                 }/>
             </Routes>
