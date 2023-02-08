@@ -3,14 +3,12 @@ import styled from "styled-components";
 import {DialogItem} from "./DialogItem";
 import {Message} from "./Message";
 import {messagesPageType} from "../../redux/store";
-import {sendMessageAC, updateNewMessageBodyCreatorAC} from "../../redux/dialogs-reducer";
 
 
 type StateType = {
     state: messagesPageType
-    dispatch: (action: any) => void
-    // dialogs: DialogsType[]
-    // messages: MessageType[]
+    onSendmessageClickkhandler:() => void
+    onNewMessageChange:(newMessage: string) => void
 }
 
 export const Dialogs = (props: StateType) => {
@@ -27,11 +25,11 @@ export const Dialogs = (props: StateType) => {
     })
 
     const onSendmessageClickkhandler = () => {
-        props.dispatch(sendMessageAC())
+        props.onSendmessageClickkhandler()
     }
 
     const onNewMessageChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.dispatch(updateNewMessageBodyCreatorAC(e.currentTarget.value))
+        props.onNewMessageChange(e.currentTarget.value)
     }
 
     return (

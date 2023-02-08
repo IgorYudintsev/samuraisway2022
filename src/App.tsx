@@ -7,18 +7,16 @@ import {Navbar} from "./components/Navbar/Navbar";
 import {Dialogs} from "./components/Dialogs/Dialogs";
 import {Route, Routes} from 'react-router-dom';
 import {StateType} from "./redux/store";
-import {storeType} from "./redux/redux-store";
+import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
+
 
 type appState = {
     state: StateType
-    //store: storeType
-    // addPost:()=>void
-    // updateNewPostText:(newText:string)=>void
     dispatch: (action: any) => void
 }
 
 function App(props: appState) {
-    //console.log(props.state)
+
     return (
         <div className="AppWrapper">
             <Header/>
@@ -27,20 +25,18 @@ function App(props: appState) {
                 <Route path={'/profile'} element={<Profile
                     profilePage={props.state.profilePage}
                     dispatch={props.dispatch}
-                    // addPost={props.addPost}
-                    // updateNewPostText={props.updateNewPostText}
                 />}/>
                 <Route path={'/dialogs'} element={
-                    <Dialogs
-                        state={props.state.dialogsPage}
-                        dispatch={props.dispatch}
+                    // <Dialogs
+                    //     state={props.state.dialogsPage}
+                    //     dispatch={props.dispatch}
+                    // />
+                    <DialogsContainer
+                    state={props.state.dialogsPage}
+                    dispatch={props.dispatch}
                     />
-
                 }/>
-
             </Routes>
-
-
             <Footer/>
         </div>
     );
