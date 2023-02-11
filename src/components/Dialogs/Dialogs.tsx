@@ -12,7 +12,7 @@ type StateType = {
 }
 
 export const Dialogs = (props: StateType) => {
-    const newMessageBody = props.state.newMessageText
+       const newMessageBody = props.state.newMessageText
     const dialogs = props.state.dialogs.map(d => {
         return (
             <DialogItem name={d.name} id={d.id}/>

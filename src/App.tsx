@@ -4,10 +4,9 @@ import {Header} from "./components/Header/Header";
 import {Footer} from "./Footer";
 import {Profile} from "./components/Profile/Profile";
 import {Navbar} from "./components/Navbar/Navbar";
-import {Dialogs} from "./components/Dialogs/Dialogs";
 import {Route, Routes} from 'react-router-dom';
-import {StateType} from "./redux/store";
-import {DialogsContainer} from "./components/Dialogs/DialogsContainer";
+import DialogsContainer from "./components/Dialogs/DialogsContainer";
+import {store} from "./redux/redux-store";
 
 
 type appState = {
@@ -23,7 +22,7 @@ function App(props: appState) {
             <Navbar/>
             <Routes>
                 <Route path={'/profile'} element={<Profile
-                    // profilePage={props.state.profilePage}
+                    profilePage={store.getState().profilePage}
                     // dispatch={props.dispatch}
                 />}/>
                 <Route path={'/dialogs'} element={
@@ -32,7 +31,7 @@ function App(props: appState) {
                     //     dispatch={props.dispatch}
                     // />
                     <DialogsContainer
-                    // state={props.state.dialogsPage}
+                       state={store.getState().dialogsPage}
                     // dispatch={props.dispatch}
                     />
                 }/>

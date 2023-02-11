@@ -1,8 +1,8 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import {Dialogs} from "./Dialogs";
 import {sendMessageAC, updateNewMessageBodyCreatorAC} from "../../redux/dialogs-reducer";
-import {messagesPageType} from "../../redux/store";
-import {StoreContext} from "../../StoreContext";
+import {connect} from "react-redux";
+import {store} from "../../redux/redux-store";
 
 type StateType = {
     // state: messagesPageType
@@ -10,23 +10,55 @@ type StateType = {
 
 }
 
-export const DialogsContainer = (props:StateType) => {
-    let consumer=useContext(StoreContext)
+// export const DialogsContainer = (props: StateType) => {
+//     let consumer = useContext(StoreContext)
+//
+//     const onSendmessageClickkhandler = () => {
+//         // props.dispatch(sendMessageAC())
+//         consumer.dispatch(sendMessageAC())
+//     }
+//
+//     const onNewMessageChange = (newMessage: string) => {
+//         consumer.dispatch(updateNewMessageBodyCreatorAC(newMessage))
+//     }
+//     return (
+//         <Dialogs
+//             state={consumer.getState().dialogsPage}
+//             onSendmessageClickkhandler={onSendmessageClickkhandler}
+//             onNewMessageChange={onNewMessageChange}
+//         />
+//     );
+//
+//
+// };
 
-    const onSendmessageClickkhandler = () => {
-        // props.dispatch(sendMessageAC())
-      consumer.dispatch(sendMessageAC())
+// const mapStateToProps = () => {
+//    // console.log(store.getState().dialogsPage)
+//     return {
+//         dialogsPage: store.getState().dialogsPage.dialogs
+//     }
+// }
+
+const mapStateToProps = (state:any) => {
+    // console.log(store.getState().dialogsPage)
+    return {
+        dialogsPage: state.dialogsPage
     }
+}
 
-    const onNewMessageChange = (newMessage:string) => {
-        consumer.dispatch(updateNewMessageBodyCreatorAC(newMessage))
+
+const mapDispatchToProps = (dispatch:any) => {
+    return {
+        onSendmessageClickkhandler: () => {
+            dispatch.dispatch(sendMessageAC())
+        },
+        onNewMessageChange: (newMessage: string) => {
+            dispatch.dispatch(updateNewMessageBodyCreatorAC(newMessage))
+        }
     }
-    return (
-       <Dialogs
-           state={consumer.getState().dialogsPage}
-           onSendmessageClickkhandler={onSendmessageClickkhandler}
-           onNewMessageChange={onNewMessageChange}
-       />
-    );
-};
+}
 
+
+let DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(Dialogs)
+console.log(DialogsContainer)
+export default DialogsContainer
