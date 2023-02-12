@@ -10,3 +10,6 @@ export type reducersType=ReturnType<typeof reducers>
 export type storeType=typeof store
 
 export let store=createStore(reducers)
+
+// @ts-ignore
+window.store=store

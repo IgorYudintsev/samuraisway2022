@@ -13,32 +13,24 @@ const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
 );
 
-
-export let rerenderEntireTree = (state: any) => {
+//
+// export let rerenderEntireTree = (state: any) => {
 
     root.render(
         <BrowserRouter>
-            {/*<StoreContext.Provider value={store}>*/}
-            {/*    <App/>*/}
-            {/*</StoreContext.Provider>*/}
-
-            {/*<ContextProvider store={store}>*/}
-            {/*    <App/>*/}
-            {/*</ContextProvider>*/}
-
-            <Provider store={store}>
+                  <Provider store={store}>
                 <App/>
             </Provider>
 
         </BrowserRouter>
     );
-}
+// }
 
 
-rerenderEntireTree(store.getState())
-store.subscribe(()=>{
-    let state=store.getState()
-    rerenderEntireTree(state)
-})
+//rerenderEntireTree(store.getState())
+// store.subscribe(()=>{
+//     let state=store.getState()
+//     rerenderEntireTree(state)
+// })
 
 reportWebVitals();

@@ -42,7 +42,8 @@ type StateType = {
 const mapStateToProps = (state:any) => {
     // console.log(store.getState().dialogsPage)
     return {
-        dialogsPage: state.dialogsPage
+        dialogsPage: state.dialogsPage.messages,
+        newMessageText:state.dialogsPage.newMessageText
     }
 }
 
