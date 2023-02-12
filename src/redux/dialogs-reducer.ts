@@ -1,5 +1,5 @@
-import React from 'react';
-import {DialogsType,  MessageType} from "./store";
+import {DialogsType, MessageType} from "./store";
+
 
 const SEND_MESSAGE = 'ADD-NEWPOSTTEXT'
 const UPDATE_NEWPOSTTEXT = 'UPDATE-NEWPOSTTEXT'
@@ -10,7 +10,7 @@ export type messagesPageType = {
     newMessageText: string
 }
 
-let initialState:messagesPageType={
+let initialState: messagesPageType = {
     dialogs: [
         {
             id: 1,
@@ -42,20 +42,18 @@ let initialState:messagesPageType={
     newMessageText: ''
 }
 
-export const DialogsReducer = (state=initialState, action: any) => {
+export const DialogsReducer = (state = initialState, action: any) => {
     switch (action.type) {
         case SEND_MESSAGE: {
             let newPostText = {
                 id: 1,
                 message: state.newMessageText
             }
-            state.messages.push(newPostText)
-            state.newMessageText = ''
-            return state
+
+            return {...state, messages: [...state.messages, newPostText], newMessageText: ''}
         }
         case UPDATE_NEWPOSTTEXT: {
-            state.newMessageText = action.newMessageText
-            return state
+            return {...state, newMessageText: action.newMessageText}
         }
         default:
             return state

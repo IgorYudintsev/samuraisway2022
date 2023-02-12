@@ -4,16 +4,16 @@ import {PostType} from "../../../redux/store";
 import {Post} from "./Post/Post";
 
 
-
 type PostsType = {
     posts: PostType[]
-    onPostChange: (newText: string) => void
     newPostText: string
+    onPostChange: (newText: string) => void
     addPost: () => void
- }
+}
 
 
 export const MyPosts = (props: PostsType) => {
+    console.log(props)
     const posts = props.posts.map(post => {
         return (
             <Post message={post.message} likesCount={post.likesCount}/>
@@ -24,6 +24,7 @@ export const MyPosts = (props: PostsType) => {
     const onChangeHandler = () => {
         if (newPostElement.current) {
             let newText = newPostElement.current.value
+            console.log(newText)
             props.onPostChange(newText)
             newPostElement.current.value = ''
         }
@@ -47,6 +48,5 @@ export const MyPosts = (props: PostsType) => {
 };
 
 const MyPostsWrapper = styled.div`
-  // background-color: dodgerblue;
   margin-left: 20px;
 `

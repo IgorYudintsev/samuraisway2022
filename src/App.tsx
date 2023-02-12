@@ -15,25 +15,15 @@ type appState = {
 }
 
 function App(props: appState) {
-
+    // console.log(store.getState().profilePage)
     return (
         <div className="AppWrapper">
             <Header/>
             <Navbar/>
             <Routes>
-                <Route path={'/profile'} element={<Profile
-                    profilePage={store.getState().profilePage}
-                    // dispatch={props.dispatch}
-                />}/>
+                <Route path={'/profile'} element={<Profile/>}/>
                 <Route path={'/dialogs'} element={
-                    // <Dialogs
-                    //     state={props.state.dialogsPage}
-                    //     dispatch={props.dispatch}
-                    // />
-                    <DialogsContainer
-                       state={store.getState().dialogsPage}
-                    // dispatch={props.dispatch}
-                    />
+                    <DialogsContainer/>
                 }/>
             </Routes>
             <Footer/>

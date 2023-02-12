@@ -1,4 +1,4 @@
-import React, {ChangeEvent} from 'react';
+import React, {ChangeEvent, useRef} from 'react';
 import styled from "styled-components";
 import {DialogItem} from "./DialogItem";
 import {Message} from "./Message";
@@ -6,32 +6,39 @@ import {messagesPageType} from "../../redux/store";
 
 
 type StateType = {
-    state: messagesPageType
-    onSendmessageClickkhandler:() => void
-    onNewMessageChange:(newMessage: string) => void
+    dialogsPage: messagesPageType
+    onSendmessageClickkhandler: () => void
+    onNewMessageChange: (newMessage: string) => void
 }
 
 export const Dialogs = (props: StateType) => {
-       const newMessageBody = props.state.newMessageText
-    const dialogs = props.state.dialogs.map(d => {
+    const newMessageBody = props.dialogsPage.newMessageText
+    const dialogs = props.dialogsPage.dialogs.map(d => {
         return (
-            <DialogItem name={d.name} id={d.id}/>
+            <DialogItem name={d.name} id={d.id} key={d.id}/>
         )
     })
-    const messages = props.state.messages.map(m => {
+    const messages = props.dialogsPage.messages.map(m => {
         return (
-            <Message message={m.message}/>
+            <Message message={m.message}  key={m.id}/>
         )
     })
+
+
+    let newDialgElement = useRef<HTMLTextAreaElement>(null)
 
     const onSendmessageClickkhandler = () => {
         props.onSendmessageClickkhandler()
     }
 
-    const onNewMessageChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.onNewMessageChange(e.currentTarget.value)
-    }
+    const onNewMessageChange = () => {
+        if (newDialgElement.current) {
+            let newText = newDialgElement.current.value
+            console.log(newText)
+            props.onNewMessageChange(newText)
 
+        }
+    }
     return (
         <Wrapper>
             <Left>
@@ -40,6 +47,7 @@ export const Dialogs = (props: StateType) => {
             <Right>
                 {messages}
                 <div><textarea
+                    ref={newDialgElement}
                     placeholder={'Enter your message'}
                     value={newMessageBody}
                     onChange={onNewMessageChange}

@@ -2,13 +2,9 @@ import React from 'react';
 import {ProfileInfo} from "./MyPosts/ProfileInfo";
 import MyPostsContainer from "./MyPosts/MyPostsContainer";
 import {profilePageType} from "../../redux/store";
-import {store} from "../../redux/redux-store";
 
-type StateType = {
-    profilePage: profilePageType
-}
 
-export const Profile = (props: StateType) => {
+export const Profile = () => {
 
     return (
         <div className={'MainContent'}>
@@ -20,9 +16,7 @@ export const Profile = (props: StateType) => {
             </ul>
             <ProfileInfo/>
 
-            <MyPostsContainer
-                //state={props.profilePage}
-            />
+            <MyPostsContainer/>
         </div>
     );
 };

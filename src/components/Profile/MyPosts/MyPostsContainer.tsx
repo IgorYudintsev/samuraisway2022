@@ -2,7 +2,7 @@ import React from 'react';
 import {addPostAC, updatePostsAC} from "../../../redux/profile-reducer";
 import {MyPosts} from "./MyPosts";
 import {connect} from "react-redux";
-import {profilePageType} from "../../../redux/store";
+import {profilePageType, StateType} from "../../../redux/store";
 import {store} from "../../../redux/redux-store";
 // import {StoreContext} from "../../../StoreContext";
 
@@ -43,8 +43,8 @@ type PostsType = {
 //     }
 // }
 
-const mapStateToProps = (state:any) => {
-    console.log(store.getState().profilePage.posts)
+const mapStateToProps = (state:StateType) => {
+    //console.log(store.getState().profilePage.posts)
     return {
         posts: state.profilePage.posts,
         newPostText:state.profilePage.newPostText
@@ -65,5 +65,4 @@ const mapDispatchToProps = (dispatch:any) => {
 
 
 let MyPostsContainer = connect(mapStateToProps, mapDispatchToProps)(MyPosts)
-console.log(mapStateToProps)
 export default MyPostsContainer

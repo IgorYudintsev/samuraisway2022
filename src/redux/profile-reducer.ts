@@ -7,7 +7,7 @@ export type profilePageType = {
     posts: PostType[]
     newPostText: string
 }
-let initialState:profilePageType= {
+let initialState: profilePageType = {
     posts: [
         {
             id: 1,
@@ -23,7 +23,7 @@ let initialState:profilePageType= {
     newPostText: 'it-Kamasutra'
 }
 
-export const ProfileReducer = (state=initialState, action: any) => {
+export const ProfileReducer = (state = initialState, action: any) => {
     switch (action.type) {
         case ADD_POST: {
             let newPost = {
@@ -31,13 +31,10 @@ export const ProfileReducer = (state=initialState, action: any) => {
                 message: state.newPostText,
                 likesCount: 0
             }
-            // state.posts.push(newPost)
-            // state.newPostText = ''
-            return {...state,posts:[...state.posts,newPost]}
+            return {...state, posts: [...state.posts, newPost], newPostText: ''}
         }
         case UPDATE_NEWPOST: {
-             // state.newPostText = action.newText
-            return {...state,newPostText:action.newText}
+            return {...state, newPostText: action.newText}
         }
         default:
             return state
