@@ -11,6 +11,7 @@ export const Navbar = () => {
             <NavWrapper><NavLink to={'/news'}>News</NavLink></NavWrapper>
             <NavWrapper><NavLink to={'/music'}>Music</NavLink></NavWrapper>
             <NavWrapper><NavLink to={'/seetings'}>Seetings</NavLink></NavWrapper>
+            <NavWrapper><NavLink to={'/users'}>Users</NavLink></NavWrapper>
         </div>
     );
 };
@@ -32,8 +33,4 @@ const NavWrapper = styled.div`
     //background: #786b59; /* Цвет фона под ссылкой */
     color: steelblue; /* Цвет ссылки */
   }
-
-  //a:visited {
-  //  color: #b4ddf6;
-  //}
 `

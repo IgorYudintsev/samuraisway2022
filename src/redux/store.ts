@@ -26,7 +26,6 @@ export type messagesPageType = {
 export type StateType = {
     profilePage: profilePageType
     dialogsPage: messagesPageType
-
 }
 
 export type StoreType = {
