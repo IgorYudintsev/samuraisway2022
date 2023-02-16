@@ -1,8 +1,9 @@
-import React, {useEffect} from 'react';
-import {InitialStateType, UsersType} from "../../redux/users-reducer";
+import React from 'react';
+import {UsersType} from "../../redux/users-reducer";
 import styled from "styled-components";
 import axios from "axios";
 import {avatar} from "../../assets/images/avatar";
+
 
 type PropsType = {
     usersPage: UsersType[]
@@ -11,76 +12,49 @@ type PropsType = {
     setUsersHandler: (users: UsersType[]) => void
 }
 
-export const Users = (props: PropsType) => {
 
-
-    if (props.usersPage.length === 0) {
+export class Users extends React.Component<PropsType> {
+      constructor(props: PropsType) {
+        super(props);
         axios.get('https://social-network.samuraijs.com/api/1.0/users').then((responce) =>
-                props.setUsersHandler(responce.data.items)
-            // props.setUsersHandler(
-            //     [
-            //         {
-            //             id: 1,
-            //             photoUrl: 'https://e7.pngegg.com/pngimages/340/946/png-clipart-avatar-user-computer-icons-software-developer-avatar-child-face-thumbnail.png',
-            //             followed: true,
-            //             fullName: "Igor",
-            //             status: 'Boss',
-            //             location: {city: 'Minsk', counry: "Belarus"}
-            //         },
-            //         {
-            //             id: 2,
-            //             photoUrl: 'https://e7.pngegg.com/pngimages/340/946/png-clipart-avatar-user-computer-icons-software-developer-avatar-child-face-thumbnail.png',
-            //             followed: false,
-            //             fullName: "Sasha",
-            //             status: 'MiddleBoss',
-            //             location: {city: 'Florida', counry: "the USA"}
-            //         },
-            //         {
-            //             id: 3,
-            //             photoUrl: 'https://e7.pngegg.com/pngimages/340/946/png-clipart-avatar-user-computer-icons-software-developer-avatar-child-face-thumbnail.png',
-            //             followed: true,
-            //             fullName: "Nadya",
-            //             status: 'JuniorBoss',
-            //             location: {city: 'Paris', counry: "France"}
-            //         }
-            //     ]
-            // )
+            this.props.setUsersHandler(responce.data.items)
         )
-
     }
 
-    return (
-        <Wrapper>
-            {props.usersPage.map(el => {
-                return (
-                    <WrapperSide key={el.id}>
-                        <LeftSide>
-                            <img src={el.photos.small !== null ? el.photos.small : avatar} alt="ava"/>
-                            <div>
-                                {el.followed
-                                    ? <button onClick={() => props.unFollowHandler(el.id)}>Follow</button>
-                                    : <button onClick={() => props.followHandler(el.id)}>UnFollow</button>
-                                }
-                            </div>
+    render() {
+        return (
+            <Wrapper>
+                {this.props.usersPage.map(el => {
+                    return (
+                        <WrapperSide key={el.id}>
+                            <LeftSide>
+                                <img src={el.photos.small !== null ? el.photos.small : avatar} alt="ava"/>
+                                <div>
+                                    {el.followed
+                                        ? <button onClick={() => this.props.unFollowHandler(el.id)}>Follow</button>
+                                        : <button onClick={() => this.props.followHandler(el.id)}>UnFollow</button>
+                                    }
+                                </div>
 
-                        </LeftSide>
-                        <RightSide>
-                            <DivForMargin>
-                                <div>{el.id}</div>
-                                <div>{el.name}</div>
-                                <div>{el.status}</div>
-                                {/*<div>{el.location.city}</div>*/}
-                                {/*<div>{el.location.counry}</div>*/}
-                            </DivForMargin>
-                        </RightSide>
+                            </LeftSide>
+                            <RightSide>
+                                <DivForMargin>
+                                    <div>{el.id}</div>
+                                    <div>{el.name}</div>
+                                    <div>{el.status}</div>
+                                    {/*<div>{el.location.city}</div>*/}
+                                    {/*<div>{el.location.counry}</div>*/}
+                                </DivForMargin>
+                            </RightSide>
 
-                    </WrapperSide>
+                        </WrapperSide>
 
-                )
-            })}
-        </Wrapper>
-    );
-};
+                    )
+                })}
+            </Wrapper>
+        );
+    }
+}
 
 const Wrapper = styled.div`
   width: 100%;
