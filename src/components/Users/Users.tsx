@@ -1,6 +1,8 @@
 import React, {useEffect} from 'react';
 import {InitialStateType, UsersType} from "../../redux/users-reducer";
 import styled from "styled-components";
+import axios from "axios";
+import {avatar} from "../../assets/images/avatar";
 
 type PropsType = {
     usersPage: UsersType[]
@@ -10,36 +12,41 @@ type PropsType = {
 }
 
 export const Users = (props: PropsType) => {
-    console.log(props.usersPage)
+
+
     if (props.usersPage.length === 0) {
-        props.setUsersHandler(
-            [
-                {
-                    id: 1,
-                    photoUrl: 'https://e7.pngegg.com/pngimages/340/946/png-clipart-avatar-user-computer-icons-software-developer-avatar-child-face-thumbnail.png',
-                    followed: true,
-                    fullName: "Igor",
-                    status: 'Boss',
-                    location: {city: 'Minsk', counry: "Belarus"}
-                },
-                {
-                    id: 2,
-                    photoUrl: 'https://e7.pngegg.com/pngimages/340/946/png-clipart-avatar-user-computer-icons-software-developer-avatar-child-face-thumbnail.png',
-                    followed: false,
-                    fullName: "Sasha",
-                    status: 'MiddleBoss',
-                    location: {city: 'Florida', counry: "the USA"}
-                },
-                {
-                    id: 3,
-                    photoUrl: 'https://e7.pngegg.com/pngimages/340/946/png-clipart-avatar-user-computer-icons-software-developer-avatar-child-face-thumbnail.png',
-                    followed: true,
-                    fullName: "Nadya",
-                    status: 'JuniorBoss',
-                    location: {city: 'Paris', counry: "France"}
-                }
-            ]
+        axios.get('https://social-network.samuraijs.com/api/1.0/users').then((responce) =>
+                props.setUsersHandler(responce.data.items)
+            // props.setUsersHandler(
+            //     [
+            //         {
+            //             id: 1,
+            //             photoUrl: 'https://e7.pngegg.com/pngimages/340/946/png-clipart-avatar-user-computer-icons-software-developer-avatar-child-face-thumbnail.png',
+            //             followed: true,
+            //             fullName: "Igor",
+            //             status: 'Boss',
+            //             location: {city: 'Minsk', counry: "Belarus"}
+            //         },
+            //         {
+            //             id: 2,
+            //             photoUrl: 'https://e7.pngegg.com/pngimages/340/946/png-clipart-avatar-user-computer-icons-software-developer-avatar-child-face-thumbnail.png',
+            //             followed: false,
+            //             fullName: "Sasha",
+            //             status: 'MiddleBoss',
+            //             location: {city: 'Florida', counry: "the USA"}
+            //         },
+            //         {
+            //             id: 3,
+            //             photoUrl: 'https://e7.pngegg.com/pngimages/340/946/png-clipart-avatar-user-computer-icons-software-developer-avatar-child-face-thumbnail.png',
+            //             followed: true,
+            //             fullName: "Nadya",
+            //             status: 'JuniorBoss',
+            //             location: {city: 'Paris', counry: "France"}
+            //         }
+            //     ]
+            // )
         )
+
     }
 
     return (
@@ -48,9 +55,7 @@ export const Users = (props: PropsType) => {
                 return (
                     <WrapperSide key={el.id}>
                         <LeftSide>
-                            <img
-                                src={el.photoUrl}
-                                alt="ava"/>
+                            <img src={el.photos.small !== null ? el.photos.small : avatar} alt="ava"/>
                             <div>
                                 {el.followed
                                     ? <button onClick={() => props.unFollowHandler(el.id)}>Follow</button>
@@ -62,10 +67,10 @@ export const Users = (props: PropsType) => {
                         <RightSide>
                             <DivForMargin>
                                 <div>{el.id}</div>
-                                <div>{el.fullName}</div>
+                                <div>{el.name}</div>
                                 <div>{el.status}</div>
-                                <div>{el.location.city}</div>
-                                <div>{el.location.counry}</div>
+                                {/*<div>{el.location.city}</div>*/}
+                                {/*<div>{el.location.counry}</div>*/}
                             </DivForMargin>
                         </RightSide>
 

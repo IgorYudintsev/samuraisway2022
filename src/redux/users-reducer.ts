@@ -5,8 +5,9 @@ export type InitialStateType = {
 export type UsersType = {
     id: number,
     photoUrl: string,
+    photos:{ small: string, large: string}
     followed: boolean,
-    fullName: string,
+    name: string,
     status: string,
     location: LocationType
 }
