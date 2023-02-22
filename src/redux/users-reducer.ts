@@ -1,11 +1,16 @@
+import {log} from "util";
+
 export type InitialStateType = {
     users: UsersType[]
+    pageSize: number,
+    totalUsersCount: number,
+    currentPage: number
 }
 
 export type UsersType = {
     id: number,
     photoUrl: string,
-    photos:{ small: string, large: string}
+    photos: { small: string, large: string }
     followed: boolean,
     name: string,
     status: string,
@@ -18,7 +23,10 @@ type LocationType = {
 }
 
 let initialState: InitialStateType = {
-    users: []
+    users: [],
+    pageSize: 10,
+    totalUsersCount: 0,
+    currentPage: 2
 }
 
 export const UsersReducer = (state = initialState, action: MainUsersType) => {
@@ -31,14 +39,21 @@ export const UsersReducer = (state = initialState, action: MainUsersType) => {
             return {...state, users: state.users.map(el => el.id === action.userId ? {...el, followed: false} : el)}
         }
         case "SET_USERS": {
-            return {...state, users: [...state.users, ...action.users]}
+            return {...state, users: action.users}
+        }
+        case "SET_CURRENTpAGE": {
+            return {...state, currentPage: action.currentPage}
+        }
+        case "SET_TOTALuSERScOUNTpAGE": {
+            // console.log(action.totalUsersCount)
+            return {...state, totalUsersCount: action.totalUsersCount}
         }
         default:
             return state
     }
 }
 
-type MainUsersType = FollowACType | UnFollowACType | setUsersACType
+type MainUsersType = FollowACType | UnFollowACType | setUsersACType | setCurrentPageACType | setTotalUsersCountACType
 type FollowACType = ReturnType<typeof followAC>
 export const followAC = (userId: number) => {
     return {
@@ -63,27 +78,18 @@ export const setUsersAC = (users: UsersType[]) => {
     } as const
 }
 
-// case FOLLOW: {
-//     let partOfStateCopy = {
-//         ...partOfState,
-//         users: partOfState.users.map(user => {
-//             if (user.id === action.userId) {
-//                 return {...user, followed: true}
-//             }
-//             return user;
-//         })
-//     };
-//     return partOfStateCopy;
-// }
-// case UNFOLLOW: {
-//     let partOfStateCopy = {
-//         ...partOfState,
-//         users: partOfState.users.map(user => {
-//             if (user.id === action.userId) {
-//                 return {...user, followed: false}
-//             }
-//             return user;
-//         })
-//     };
-//     return partOfStateCopy;
-// }
+type setCurrentPageACType = ReturnType<typeof setCurrentPageAC>
+export const setCurrentPageAC = (currentPage: number) => {
+    return {
+        type: 'SET_CURRENTpAGE',
+        currentPage
+    } as const
+}
+
+type setTotalUsersCountACType = ReturnType<typeof setTotalUsersCountAC>
+export const setTotalUsersCountAC = (totalUsersCount: number) => {
+    return {
+        type: 'SET_TOTALuSERScOUNTpAGE',
+        totalUsersCount
+    } as const
+}
