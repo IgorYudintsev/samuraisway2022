@@ -8,8 +8,8 @@ type PropsType={
     pageSize: number
     onPageChanged:(elPageNumber: number)=>void
     currentPage:number
-    followHandler: (userId: number) => void
-    unFollowHandler: (userId: number) => void
+    follow: (userId: number) => void
+    unFollow: (userId: number) => void
     usersPage:UsersType[]
 }
 
@@ -39,8 +39,8 @@ export const Users = (props:PropsType) => {
                             <img src={el.photos.small !== null ? el.photos.small : avatar} alt="ava"/>
                             <div>
                                 {el.followed
-                                    ? <button onClick={() => props.unFollowHandler(el.id)}>Follow</button>
-                                    : <button onClick={() => props.followHandler(el.id)}>UnFollow</button>
+                                    ? <button onClick={() => props.unFollow(el.id)}>Follow</button>
+                                    : <button onClick={() => props.follow(el.id)}>UnFollow</button>
                                 }
                             </div>
 
