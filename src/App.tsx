@@ -6,8 +6,6 @@ import {Profile} from "./components/Profile/Profile";
 import {Navbar} from "./components/Navbar/Navbar";
 import {Route, Routes} from 'react-router-dom';
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
-import {store} from "./redux/redux-store";
-import {Users} from "./components/Users/Users";
 import UsersContainer from "./components/Users/UsersContainer";
 
 
