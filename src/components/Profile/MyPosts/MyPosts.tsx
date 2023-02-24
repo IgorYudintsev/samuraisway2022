@@ -13,7 +13,6 @@ type PostsType = {
 
 
 export const MyPosts = (props: PostsType) => {
-    console.log(props)
     const posts = props.posts.map(post => {
         return (
             <Post message={post.message} likesCount={post.likesCount}/>
@@ -24,7 +23,6 @@ export const MyPosts = (props: PostsType) => {
     const onChangeHandler = () => {
         if (newPostElement.current) {
             let newText = newPostElement.current.value
-            console.log(newText)
             props.onPostChange(newText)
             newPostElement.current.value = ''
         }

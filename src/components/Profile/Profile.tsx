@@ -1,21 +1,24 @@
 import React from 'react';
 import {ProfileInfo} from "./MyPosts/ProfileInfo";
 import MyPostsContainer from "./MyPosts/MyPostsContainer";
-import {profilePageType} from "../../redux/store";
+import {UserProfileType} from "../../redux/profile-reducer";
 
 
-export const Profile = () => {
+type PropsType={
+    userProfile:UserProfileType
+}
 
+
+export const Profile = (props:PropsType) => {
     return (
         <div className={'MainContent'}>
-            <ul>
-                <li>HTML</li>
-                <li>CSS</li>
-                <li>TS</li>
-                <li>REACT</li>
-            </ul>
-            <ProfileInfo/>
-
+            {/*<ul>*/}
+            {/*    <li>HTML</li>*/}
+            {/*    <li>CSS</li>*/}
+            {/*    <li>TS</li>*/}
+            {/*    <li>REACT</li>*/}
+            {/*</ul>*/}
+            <ProfileInfo userProfile={props.userProfile}/>
             <MyPostsContainer/>
         </div>
     );

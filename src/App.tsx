@@ -7,6 +7,7 @@ import {Navbar} from "./components/Navbar/Navbar";
 import {Route, Routes} from 'react-router-dom';
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import UsersContainer from "./components/Users/UsersContainer";
+import ProfileContainer from "./components/Profile/ProfileContainer";
 
 
 type appState = {
@@ -20,7 +21,7 @@ function App(props: appState) {
             <Header/>
             <Navbar/>
             <Routes>
-                <Route path={'/profile'} element={<Profile/>}/>
+                <Route path={'/profile/'} element={<ProfileContainer/>}/>
                 <Route path={'/dialogs'} element={<DialogsContainer/>}/>
                 <Route path={'/users'} element={<UsersContainer/>}/>
             </Routes>

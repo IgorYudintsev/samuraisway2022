@@ -1,11 +1,25 @@
 import React from 'react';
 import styled from "styled-components";
+import {UserProfileType} from "../../../redux/profile-reducer";
+import {avatar} from './../../../assets/images/avatar'
+import {Preloader} from "../../common/Preloader";
 
-export const ProfileInfo = () => {
+
+type PropsType = {
+    userProfile: UserProfileType
+}
+
+
+export const ProfileInfo = (props: PropsType) => {
+    console.log(props.userProfile?.photos.small)
+    if(!props.userProfile)return <Preloader/>
     return (
         <Wrapper>
             <img
-                src="https://e7.pngegg.com/pngimages/340/946/png-clipart-avatar-user-computer-icons-software-developer-avatar-child-face-thumbnail.png"
+                src={props.userProfile?.photos.small
+                    ? props.userProfile?.photos.small
+                    : avatar
+                }
                 alt="ava"/>
 
             <div>Ava + description</div>
