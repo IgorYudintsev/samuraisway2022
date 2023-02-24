@@ -11,7 +11,7 @@ type PropsType = {
 
 
 export const ProfileInfo = (props: PropsType) => {
-    console.log(props.userProfile?.photos.small)
+    console.log(props.userProfile)
     if(!props.userProfile)return <Preloader/>
     return (
         <Wrapper>

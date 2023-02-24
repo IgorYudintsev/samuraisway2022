@@ -5,21 +5,31 @@ import {reducersType} from "../../redux/redux-store";
 import {connect} from "react-redux";
 import {setUserProfile, UserProfileType} from "../../redux/profile-reducer";
 
+
 type PropsType = {
     setUserProfile: (profile: any) => void
     userProfile: UserProfileType
 }
 
+
 export class ProfileContainer extends React.Component<PropsType> {
+
     componentDidMount() {
-        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/2`)
+        let getItemResult
+        let getItem = localStorage.getItem('elId')
+        if (getItem !== null)  getItemResult = JSON.parse(getItem)
+
+
+        console.log(getItemResult)
+        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${getItemResult}`)
             .then((responce) => {
-                this.props.setUserProfile(responce.data)
+                    this.props.setUserProfile(responce.data)
                 }
             )
     }
 
     render() {
+
         return (
             <div>
                 <Profile userProfile={this.props.userProfile}/>
@@ -31,12 +41,11 @@ export class ProfileContainer extends React.Component<PropsType> {
 
 
 const mapStateToProps = (state: reducersType) => {
-    //console.log(state.profilePage.profile)
+
     return {
         userProfile: state.profilePage.profile
     }
 }
 
-export default connect(mapStateToProps,
-    {setUserProfile}
-)(ProfileContainer)
+
+export default connect(mapStateToProps, {setUserProfile})(ProfileContainer)

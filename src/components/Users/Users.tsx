@@ -34,6 +34,7 @@ export const Users = (props:PropsType) => {
                 })}
             </div>
             {props.usersPage.map(el => {
+                localStorage.setItem('elId',JSON.stringify(el.id))
                 return (
                     <WrapperSide key={el.id}>
                         <LeftSide>
