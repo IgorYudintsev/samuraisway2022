@@ -21,7 +21,7 @@ function App(props: appState) {
             <Header/>
             <Navbar/>
             <Routes>
-                <Route path={'/profile/'} element={<ProfileContainer/>}/>
+                <Route path={'/profile/*'} element={<ProfileContainer/>}/>
                 <Route path={'/dialogs'} element={<DialogsContainer/>}/>
                 <Route path={'/users'} element={<UsersContainer/>}/>
             </Routes>

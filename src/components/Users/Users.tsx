@@ -38,7 +38,7 @@ export const Users = (props:PropsType) => {
                     <WrapperSide key={el.id}>
                         <LeftSide>
                             {/*<NavLink to={`/profile/${el.id}`}>*/}
-                            <NavLink to={`/profile/`}>
+                            <NavLink to={`/profile/${el.id}`}>
                                 <img src={el.photos.small !== null ? el.photos.small : avatar} alt="ava"/>
                             </NavLink>
 
