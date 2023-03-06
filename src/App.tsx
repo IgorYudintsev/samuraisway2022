@@ -8,6 +8,8 @@ import {Route, Routes} from 'react-router-dom';
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import UsersContainer from "./components/Users/UsersContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
+import HeaderContainer from "./components/Header/HeaderContainer";
+
 
 
 type appState = {
@@ -18,7 +20,8 @@ type appState = {
 function App(props: appState) {
     return (
         <div className="AppWrapper">
-            <Header/>
+            {/*<Header/>*/}
+            <HeaderContainer/>
             <Navbar/>
             <Routes>
                 <Route path={'/profile/*'} element={<ProfileContainer/>}/>
