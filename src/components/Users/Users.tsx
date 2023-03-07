@@ -13,6 +13,8 @@ type PropsType = {
     follow: (userId: number) => void
     unFollow: (userId: number) => void
     usersPage: UsersType[]
+    followingInProgres: (onOff: boolean,userID:number) => void
+    followingInProgresValue:number[]
 }
 
 
@@ -24,38 +26,40 @@ export const Users = (props: PropsType) => {
     }
 
     const followHandler = (userID: number) => {
-       // props.follow(userID)
+        props.followingInProgres(true,userID)
         axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${userID}`,
             {},
             {
                 withCredentials: true,
-                  headers:{
+                headers: {
                     'API-KEY': '0e5dc50f-7e9f-4eda-9157-a63c5026aaad'
-                  }
+                }
             })
             .then((responce) => {
-                    if (responce.data.resultCode === 0) {
-                        props.follow(userID)
-                    }
+                if (responce.data.resultCode === 0) {
+                    props.follow(userID)
                 }
-            )
+                props.followingInProgres(false,userID)
+            })
+
     }
 
     const UNfollowHandler = (userID: number) => {
-       // props.unFollow(userID)
+        // props.unFollow(userID)
+        props.followingInProgres(true,userID)
         axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${userID}`,
             {
                 withCredentials: true,
-                headers:{
+                headers: {
                     'API-KEY': '0e5dc50f-7e9f-4eda-9157-a63c5026aaad'
                 }
             })
             .then((responce) => {
-                    if (responce.data.resultCode === 0) {
-                        props.unFollow(userID)
-                    }
+                if (responce.data.resultCode === 0) {
+                    props.unFollow(userID)
                 }
-            )
+                props.followingInProgres(false,userID)
+            })
     }
 
 
@@ -83,8 +87,8 @@ export const Users = (props: PropsType) => {
 
                             <div>
                                 {el.followed
-                                    ? <button onClick={() => UNfollowHandler(el.id)}>Follow</button>
-                                    : <button onClick={() => followHandler(el.id)}>UnFollow</button>
+                                    ? <button disabled={props.followingInProgresValue.some(id=>id===el.id)} onClick={() => UNfollowHandler(el.id)}>Follow</button>
+                                    : <button disabled={props.followingInProgresValue.some(id=>id===el.id)} onClick={() => followHandler(el.id)}>UnFollow</button>
                                 }
                             </div>
 
