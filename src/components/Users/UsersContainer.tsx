@@ -15,6 +15,7 @@ import {Users} from "./Users";
 import axios from "axios";
 import styled from "styled-components";
 import {Preloader} from "../common/Preloader";
+import { usersApi} from "../../api/api";
 
 type PropsType = {
     usersPage: UsersType[]
@@ -33,12 +34,15 @@ type PropsType = {
 class UsersContainer extends React.Component<PropsType> {
     componentDidMount() {
         this.props.toggleIsFetching(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${this.props.currentPage}`,
-            {withCredentials:true}
-            )
-            .then((responce) => {
-                    this.props.setUsers(responce.data.items)
-                    this.props.setTotalUsersCount(responce.data.totalCount)
+        usersApi.getUsers(this.props.pageSize,this.props.currentPage)
+        // axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${this.props.currentPage}`,
+        //     {withCredentials:true}
+        //     )
+
+            .then((data) => {
+        debugger
+                    this.props.setUsers(data.items)
+                    this.props.setTotalUsersCount(data.totalCount)
                     this.props.toggleIsFetching(false)
                 }
             )
@@ -46,11 +50,12 @@ class UsersContainer extends React.Component<PropsType> {
     onPageChanged = (elPageNumber: number) => {
         this.props.toggleIsFetching(true)
         this.props.setCurrentPage(elPageNumber)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${elPageNumber}`,
-            {withCredentials:true}
-            )
-            .then((responce) => {
-                    this.props.setUsers(responce.data.items)
+        usersApi.getUsers(this.props.pageSize,elPageNumber)
+        // axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${elPageNumber}`,
+        //     {withCredentials:true}
+        //     )
+            .then((data) => {
+                    this.props.setUsers(data.items)
                     this.props.toggleIsFetching(false)
                 }
             )
