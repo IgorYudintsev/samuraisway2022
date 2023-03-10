@@ -1,3 +1,6 @@
+import {usersApi} from "../api/api";
+import {Dispatch} from "redux";
+
 export type InitialStateType = {
     users: UsersType[]
     pageSize: number,
@@ -52,10 +55,11 @@ export const UsersReducer = (state = initialState, action: MainUsersType) => {
         case "TOGGLE_IS_FETCHING": {
             return {...state, isFetching: action.onOff}
         }
-        case "FOOLLOWING_IN_PROGRESS":{
-            return {...state,followingInProgres: action.onOff
-            ? [...state.followingInProgres,action.userID]
-            : state.followingInProgres.filter(el=>el!==action.userID)
+        case "FOOLLOWING_IN_PROGRESS": {
+            return {
+                ...state, followingInProgres: action.onOff
+                    ? [...state.followingInProgres, action.userID]
+                    : state.followingInProgres.filter(el => el !== action.userID)
             }
         }
 
@@ -121,14 +125,50 @@ export const toggleIsFetching = (onOff: boolean) => {
 }
 
 type followingInProgresACType = ReturnType<typeof followingInProgres>
-export const followingInProgres = (onOff: boolean,userID:number) => {
+export const followingInProgres = (onOff: boolean, userID: number) => {
     return {
         type: "FOOLLOWING_IN_PROGRESS",
-        onOff,userID
-    }as const
+        onOff, userID
+    } as const
 }
 
+
+export const getUsersThunkCreator = (pageSize: number, currentPage: number) => (dispatch: Dispatch) => {
+    dispatch(toggleIsFetching(true))
+    usersApi.getUsers(pageSize, currentPage)
+        .then((data) => {
+                dispatch(setUsers(data.items))
+                dispatch(setTotalUsersCount(data.totalCount))
+                dispatch(toggleIsFetching(false))
+            }
+        )
+}
+
+export const followThunkCreator = (userID: number) => (dispatch: Dispatch) => {
+    dispatch(followingInProgres(true, userID))
+    usersApi.follow(userID)
+        .then((responce) => {
+            if (responce.resultCode === 0) {
+                dispatch(follow(userID))
+            }
+            dispatch(followingInProgres(false, userID))
+        })
+}
+
+export const unFollowThunkCreator = (userID: number) => (dispatch: Dispatch) => {
+    dispatch(followingInProgres(true, userID))
+    usersApi.unFollow(userID)
+        .then((responce) => {
+            if (responce.resultCode === 0) {
+                dispatch(unFollow(userID))
+            }
+            dispatch(followingInProgres(false, userID))
+        })
+}
+
+
 //-----------------------------------------------------------------------------
+
 
 // export type InitialStateType = {
 //     users: UsersType[]
@@ -136,7 +176,7 @@ export const followingInProgres = (onOff: boolean,userID:number) => {
 //     totalUsersCount: number,
 //     currentPage: number,
 //     isFetching: boolean,
-//     followingInProgres: boolean
+//     followingInProgres: number[]
 // }
 //
 // export type UsersType = {
@@ -148,7 +188,6 @@ export const followingInProgres = (onOff: boolean,userID:number) => {
 //     status: string,
 //     location: LocationType
 // }
-//
 // type LocationType = {
 //     city: string,
 //     counry: string
@@ -160,7 +199,7 @@ export const followingInProgres = (onOff: boolean,userID:number) => {
 //     totalUsersCount: 0,
 //     currentPage: 2,
 //     isFetching: true,
-//     followingInProgres: false
+//     followingInProgres: []
 // }
 //
 // export const UsersReducer = (state = initialState, action: MainUsersType) => {
@@ -186,7 +225,10 @@ export const followingInProgres = (onOff: boolean,userID:number) => {
 //             return {...state, isFetching: action.onOff}
 //         }
 //         case "FOOLLOWING_IN_PROGRESS":{
-//             return {...state,followingInProgres:action.onOff}
+//             return {...state,followingInProgres: action.onOff
+//                     ? [...state.followingInProgres,action.userID]
+//                     : state.followingInProgres.filter(el=>el!==action.userID)
+//             }
 //         }
 //
 //         default:
@@ -251,10 +293,13 @@ export const followingInProgres = (onOff: boolean,userID:number) => {
 // }
 //
 // type followingInProgresACType = ReturnType<typeof followingInProgres>
-// export const followingInProgres = (onOff: boolean) => {
+// export const followingInProgres = (onOff: boolean,userID:number) => {
 //     return {
 //         type: "FOOLLOWING_IN_PROGRESS",
-//         onOff
+//         onOff,userID
 //     }as const
 // }
+
+//-----------------------------------------------------------------------------
+
 

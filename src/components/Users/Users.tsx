@@ -1,20 +1,23 @@
 import React from 'react';
 import styled, {css} from "styled-components";
 import {avatar} from "../../assets/images/avatar";
-import {UsersType} from "../../redux/users-reducer";
+import {followThunkCreator, UsersType} from "../../redux/users-reducer";
 import {NavLink} from "react-router-dom";
 import axios from "axios";
+import {usersApi} from "../../api/api";
 
 type PropsType = {
     totalUsersCount: number
     pageSize: number
     onPageChanged: (elPageNumber: number) => void
     currentPage: number
-    follow: (userId: number) => void
-    unFollow: (userId: number) => void
+    //follow: (userId: number) => void
+    //unFollow: (userId: number) => void
     usersPage: UsersType[]
-    followingInProgres: (onOff: boolean,userID:number) => void
-    followingInProgresValue:number[]
+    //followingInProgres: (onOff: boolean, userID: number) => void
+    followingInProgresValue: number[]
+    followThunkCreator: (userID: number) => void
+    unFollowThunkCreator:(userID:number)=>void
 }
 
 
@@ -26,40 +29,61 @@ export const Users = (props: PropsType) => {
     }
 
     const followHandler = (userID: number) => {
-        props.followingInProgres(true,userID)
-        axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${userID}`,
-            {},
-            {
-                withCredentials: true,
-                headers: {
-                    'API-KEY': '0e5dc50f-7e9f-4eda-9157-a63c5026aaad'
-                }
-            })
-            .then((responce) => {
-                if (responce.data.resultCode === 0) {
-                    props.follow(userID)
-                }
-                props.followingInProgres(false,userID)
-            })
+
+        props.followThunkCreator(userID)
+
+        // props.followingInProgres(true, userID)
+        // usersApi.follow(userID)
+        //     .then((responce) => {
+        //         if (responce.resultCode === 0) {
+        //             props.follow(userID)
+        //         }
+        //         props.followingInProgres(false, userID)
+        //     })
+//----------------------------------------------
+        // axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${userID}`,
+        //     {},
+        //     {
+        //         withCredentials: true,
+        //         headers: {
+        //             'API-KEY': '0e5dc50f-7e9f-4eda-9157-a63c5026aaad'
+        //         }
+        //     })
+        //     .then((responce) => {
+        //         if (responce.data.resultCode === 0) {
+        //             props.follow(userID)
+        //         }
+        //         props.followingInProgres(false,userID)
+        //     })
 
     }
 
     const UNfollowHandler = (userID: number) => {
-        // props.unFollow(userID)
-        props.followingInProgres(true,userID)
-        axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${userID}`,
-            {
-                withCredentials: true,
-                headers: {
-                    'API-KEY': '0e5dc50f-7e9f-4eda-9157-a63c5026aaad'
-                }
-            })
-            .then((responce) => {
-                if (responce.data.resultCode === 0) {
-                    props.unFollow(userID)
-                }
-                props.followingInProgres(false,userID)
-            })
+
+
+        props.unFollowThunkCreator( userID)
+
+        // usersApi.unFollow(userID)
+        //     .then((responce) => {
+        //         if (responce.resultCode === 0) {
+        //             props.unFollow(userID)
+        //         }
+        //         props.followingInProgres(false, userID)
+        //     })
+//-----------------------------------------------------------
+        // axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${userID}`,
+        //     {
+        //         withCredentials: true,
+        //         headers: {
+        //             'API-KEY': '0e5dc50f-7e9f-4eda-9157-a63c5026aaad'
+        //         }
+        //     })
+        //     .then((responce) => {
+        //         if (responce.data.resultCode === 0) {
+        //             props.unFollow(userID)
+        //         }
+        //         props.followingInProgres(false,userID)
+        //     })
     }
 
 
@@ -87,8 +111,10 @@ export const Users = (props: PropsType) => {
 
                             <div>
                                 {el.followed
-                                    ? <button disabled={props.followingInProgresValue.some(id=>id===el.id)} onClick={() => UNfollowHandler(el.id)}>Follow</button>
-                                    : <button disabled={props.followingInProgresValue.some(id=>id===el.id)} onClick={() => followHandler(el.id)}>UnFollow</button>
+                                    ? <button disabled={props.followingInProgresValue.some(id => id === el.id)}
+                                              onClick={() => UNfollowHandler(el.id)}>Follow</button>
+                                    : <button disabled={props.followingInProgresValue.some(id => id === el.id)}
+                                              onClick={() => followHandler(el.id)}>UnFollow</button>
                                 }
                             </div>
 
@@ -168,24 +194,66 @@ const DivForMargin = styled.div`
 // import {avatar} from "../../assets/images/avatar";
 // import {UsersType} from "../../redux/users-reducer";
 // import {NavLink} from "react-router-dom";
+// import axios from "axios";
 //
-// type PropsType={
-//     totalUsersCount:number
+// type PropsType = {
+//     totalUsersCount: number
 //     pageSize: number
-//     onPageChanged:(elPageNumber: number)=>void
-//     currentPage:number
+//     onPageChanged: (elPageNumber: number) => void
+//     currentPage: number
 //     follow: (userId: number) => void
 //     unFollow: (userId: number) => void
-//     usersPage:UsersType[]
+//     usersPage: UsersType[]
+//     followingInProgres: (onOff: boolean,userID:number) => void
+//     followingInProgresValue:number[]
 // }
 //
 //
-// export const Users = (props:PropsType) => {
+// export const Users = (props: PropsType) => {
 //     let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize)
 //     let pages = []
 //     for (let i = 1; i <= pagesCount; i++) {
 //         pages.push(i)
 //     }
+//
+//     const followHandler = (userID: number) => {
+//         props.followingInProgres(true,userID)
+//         axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${userID}`,
+//             {},
+//             {
+//                 withCredentials: true,
+//                 headers: {
+//                     'API-KEY': '0e5dc50f-7e9f-4eda-9157-a63c5026aaad'
+//                 }
+//             })
+//             .then((responce) => {
+//                 if (responce.data.resultCode === 0) {
+//                     props.follow(userID)
+//                 }
+//                 props.followingInProgres(false,userID)
+//             })
+//
+//     }
+//
+//     const UNfollowHandler = (userID: number) => {
+//         // props.unFollow(userID)
+//         props.followingInProgres(true,userID)
+//         axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${userID}`,
+//             {
+//                 withCredentials: true,
+//                 headers: {
+//                     'API-KEY': '0e5dc50f-7e9f-4eda-9157-a63c5026aaad'
+//                 }
+//             })
+//             .then((responce) => {
+//                 if (responce.data.resultCode === 0) {
+//                     props.unFollow(userID)
+//                 }
+//                 props.followingInProgres(false,userID)
+//             })
+//     }
+//
+//
 //     return (
 //         <Wrapper>
 //             <div>
@@ -199,7 +267,7 @@ const DivForMargin = styled.div`
 //                 })}
 //             </div>
 //             {props.usersPage.map(el => {
-//                 localStorage.setItem('elId',JSON.stringify(el.id))
+//                 localStorage.setItem('elId', JSON.stringify(el.id))
 //                 return (
 //                     <WrapperSide key={el.id}>
 //                         <LeftSide>
@@ -210,8 +278,8 @@ const DivForMargin = styled.div`
 //
 //                             <div>
 //                                 {el.followed
-//                                     ? <button onClick={() => props.unFollow(el.id)}>Follow</button>
-//                                     : <button onClick={() => props.follow(el.id)}>UnFollow</button>
+//                                     ? <button disabled={props.followingInProgresValue.some(id=>id===el.id)} onClick={() => UNfollowHandler(el.id)}>Follow</button>
+//                                     : <button disabled={props.followingInProgresValue.some(id=>id===el.id)} onClick={() => followHandler(el.id)}>UnFollow</button>
 //                                 }
 //                             </div>
 //
@@ -268,7 +336,7 @@ const DivForMargin = styled.div`
 //   margin-bottom: 10px;
 //   text-align: center;
 //
-//   & >a> img {
+//   & > a > img {
 //     width: 50px;
 //   }
 // `
@@ -283,3 +351,5 @@ const DivForMargin = styled.div`
 //   //background-color: #1e3786;
 //   margin-left: 15px;
 // `
+
+//-------------------------------------------------------------------------------------------------
