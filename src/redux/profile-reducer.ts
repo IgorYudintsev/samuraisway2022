@@ -1,4 +1,7 @@
 import {PostType} from "./store";
+import {Dispatch} from "redux";
+import {usersApi} from "../api/api";
+import {followingInProgres, unFollow} from "./users-reducer";
 
 
 
@@ -92,6 +95,14 @@ export const setUserProfile = (profile: any) => {
         type: "SET_USER_POROFILE",
         profile
     } as const
+}
+
+export const setUserProfileThunkCreator = (getItemResult: number) => (dispatch: Dispatch) => {
+     usersApi.getProfile(getItemResult)
+        .then((responce) => {
+                dispatch(setUserProfile(responce))
+            }
+        )
 }
 
 

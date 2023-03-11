@@ -28,6 +28,21 @@ export const usersApi = {
             .then((responce) => {
                 return responce.data
             })
+    },
+    getProfile(getItemResult:number){
+        return instance.get(`profile/${getItemResult}`)
+            .then((responce) => {
+                return responce.data
+            })
+    }
+}
+
+export const authAPI={
+    authMe(){
+        return instance.get(`auth/me`)
+            .then((responce) => {
+                return responce.data
+            })
     }
 }
 
