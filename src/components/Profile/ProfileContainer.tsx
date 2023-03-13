@@ -5,11 +5,13 @@ import {reducersType} from "../../redux/redux-store";
 import {connect} from "react-redux";
 import {setUserProfile, setUserProfileThunkCreator, UserProfileType} from "../../redux/profile-reducer";
 import {usersApi} from "../../api/api";
+import {Navigate} from "react-router-dom";
 
 
 type PropsType = {
     setUserProfile: (profile: any) => void
     userProfile: UserProfileType
+    isAuth:boolean
     setUserProfileThunkCreator:(getItemResult: number)=>void
 }
 
@@ -20,30 +22,20 @@ export class ProfileContainer extends React.Component<PropsType> {
         let getItemResult
         let getItem = localStorage.getItem('elId')
         if (getItem !== null) getItemResult = JSON.parse(getItem)
-
-
-        console.log(getItemResult)
-
        this.props.setUserProfileThunkCreator(getItemResult)
-
-       // usersApi.getProfile(getItemResult)
-       //      .then((responce) => {
-       //              this.props.setUserProfile(responce)
-       //          }
-       //      )
-
-        // axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${getItemResult}`)
-        //     .then((responce) => {
-        //             this.props.setUserProfile(responce.data)
-        //         }
-        //     )
     }
 
     render() {
+        if(!this.props.isAuth){
+            return <Navigate to={'/login'}/>
+        }
 
         return (
             <div>
-                <Profile userProfile={this.props.userProfile}/>
+                <Profile
+                    userProfile={this.props.userProfile}
+                    isAuth={this.props.isAuth}
+                />
             </div>
 
         );
@@ -54,7 +46,8 @@ export class ProfileContainer extends React.Component<PropsType> {
 const mapStateToProps = (state: reducersType) => {
 
     return {
-        userProfile: state.profilePage.profile
+        userProfile: state.profilePage.profile,
+        isAuth: state.auth.isAuth
     }
 }
 

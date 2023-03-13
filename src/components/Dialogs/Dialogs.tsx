@@ -3,15 +3,18 @@ import styled from "styled-components";
 import {DialogItem} from "./DialogItem";
 import {Message} from "./Message";
 import {messagesPageType} from "../../redux/store";
+import {Navigate} from "react-router-dom";
 
 
 type StateType = {
     dialogsPage: messagesPageType
+    isAuth: boolean
     onSendmessageClickkhandler: () => void
     onNewMessageChange: (newMessage: string) => void
 }
 
 export const Dialogs = (props: StateType) => {
+
     const newMessageBody = props.dialogsPage.newMessageText
     const dialogs = props.dialogsPage.dialogs.map(d => {
         return (
@@ -39,6 +42,12 @@ export const Dialogs = (props: StateType) => {
 
         }
     }
+
+    if(!props.isAuth){
+       return <Navigate to={'/login'}/>
+    }
+
+
     return (
         <Wrapper>
             <Left>

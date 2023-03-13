@@ -3,13 +3,15 @@ import {Dialogs} from "./Dialogs";
 import {sendMessageAC, updateNewMessageBodyCreatorAC} from "../../redux/dialogs-reducer";
 import {connect} from "react-redux";
 import {StateType} from "../../redux/store";
+import {reducersType} from "../../redux/redux-store";
 
 
 
-const mapStateToProps = (state: StateType) => {
-    console.log(state.dialogsPage)
+const mapStateToProps = (state: reducersType) => {
+    // console.log(state.dialogsPage)
     return {
         dialogsPage: state.dialogsPage,
+        isAuth: state.auth.isAuth
       }
 }
 
