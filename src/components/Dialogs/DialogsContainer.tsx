@@ -1,9 +1,12 @@
 import React from 'react';
-import {Dialogs} from "./Dialogs";
+import {Dialogs, StateDialogsType} from "./Dialogs";
 import {sendMessageAC, updateNewMessageBodyCreatorAC} from "../../redux/dialogs-reducer";
 import {connect} from "react-redux";
 import {StateType} from "../../redux/store";
 import {reducersType} from "../../redux/redux-store";
+import {Navigate} from "react-router-dom";
+import {ProfileContainer} from "../Profile/ProfileContainer";
+import {WithAuthRedirectComponent} from "../../hoc/withAuthRedirectComponent";
 
 
 
@@ -27,7 +30,19 @@ const mapDispatchToProps = (dispatch: any) => {
     }
 }
 
+const AuthRedirectComponent=WithAuthRedirectComponent(Dialogs)
 
+// const AuthRedirectComponent=(props:StateDialogsType)=>{
+//     if(!props.isAuth){
+//         return <Navigate to={'/login'}/>
+//     }
+//     return  <Dialogs
+//         dialogsPage={props.dialogsPage}
+//         //isAuth={props.isAuth}
+//         onSendmessageClickkhandler={props.onSendmessageClickkhandler}
+//         onNewMessageChange={props.onNewMessageChange}
+//     />
+// }
 
-const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(Dialogs)
+const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(AuthRedirectComponent)
 export default DialogsContainer
