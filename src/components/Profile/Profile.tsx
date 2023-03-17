@@ -6,7 +6,7 @@ import {UserProfileType} from "../../redux/profile-reducer";
 
 type PropsType={
     userProfile:UserProfileType
-    isAuth:boolean
+   // isAuth:boolean
 }
 
 

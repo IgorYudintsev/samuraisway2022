@@ -8,7 +8,7 @@ import {Navigate} from "react-router-dom";
 
 export type StateDialogsType = {
     dialogsPage: messagesPageType
-    isAuth?: boolean
+    //isAuth?: boolean
     onSendmessageClickkhandler: () => void
     onNewMessageChange: (newMessage: string) => void
 }

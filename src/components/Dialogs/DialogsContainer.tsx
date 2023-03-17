@@ -14,7 +14,7 @@ const mapStateToProps = (state: reducersType) => {
     // console.log(state.dialogsPage)
     return {
         dialogsPage: state.dialogsPage,
-        isAuth: state.auth.isAuth
+        // isAuth: state.auth.isAuth
       }
 }
 
