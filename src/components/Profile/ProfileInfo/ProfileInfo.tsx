@@ -1,8 +1,9 @@
 import React from 'react';
 import styled from "styled-components";
 import {UserProfileType} from "../../../redux/profile-reducer";
-import {avatar} from './../../../assets/images/avatar'
+import {avatar} from '../../../assets/images/avatar'
 import {Preloader} from "../../common/Preloader";
+import {ProfileStatus} from "./ProfileStatus";
 
 
 type PropsType = {
@@ -23,6 +24,7 @@ export const ProfileInfo = (props: PropsType) => {
                 alt="ava"/>
 
             <div>Ava + description</div>
+            <ProfileStatus status={'hellow'}/>
         </Wrapper>
     );
 };

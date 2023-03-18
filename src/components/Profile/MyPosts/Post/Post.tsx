@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from "styled-components";
-import {ProfileInfo} from "../ProfileInfo";
+import {ProfileInfo} from "../../ProfileInfo/ProfileInfo";
 
 type PropsType = {
     message: string

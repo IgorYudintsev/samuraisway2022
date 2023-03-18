@@ -5,7 +5,7 @@ import {connect} from "react-redux";
 import {StateType} from "../../redux/store";
 import {reducersType} from "../../redux/redux-store";
 import {Navigate} from "react-router-dom";
-import {ProfileContainer} from "../Profile/ProfileContainer";
+import {ProfileContainer} from "../Profile/ProfileInfo/ProfileContainer";
 import {WithAuthRedirectComponent} from "../../hoc/withAuthRedirectComponent";
 import {compose} from "redux";
 

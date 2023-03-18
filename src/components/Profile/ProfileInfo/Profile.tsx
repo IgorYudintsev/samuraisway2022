@@ -1,12 +1,11 @@
 import React from 'react';
-import {ProfileInfo} from "./MyPosts/ProfileInfo";
-import MyPostsContainer from "./MyPosts/MyPostsContainer";
-import {UserProfileType} from "../../redux/profile-reducer";
+import {ProfileInfo} from "./ProfileInfo";
+import MyPostsContainer from "../MyPosts/MyPostsContainer";
+import {UserProfileType} from "../../../redux/profile-reducer";
 
 
 type PropsType={
     userProfile:UserProfileType
-   // isAuth:boolean
 }
 
 
