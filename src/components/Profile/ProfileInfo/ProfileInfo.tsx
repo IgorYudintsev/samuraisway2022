@@ -8,11 +8,13 @@ import {ProfileStatus} from "./ProfileStatus";
 
 type PropsType = {
     userProfile: UserProfileType
+    status:string
+    updateStatus:(status:string)=>void
 }
 
 
 export const ProfileInfo = (props: PropsType) => {
-    console.log(props.userProfile)
+    //console.log(props.userProfile)
     if(!props.userProfile)return <Preloader/>
     return (
         <Wrapper>
@@ -24,7 +26,11 @@ export const ProfileInfo = (props: PropsType) => {
                 alt="ava"/>
 
             <div>Ava + description</div>
-            <ProfileStatus status={'hellow'}/>
+            {/*<ProfileStatus status={'hellow'}   updateStatus={props.updateStatus}/>*/}
+            <ProfileStatus
+                status={props.status}
+                updateStatus={props.updateStatus}
+            />
         </Wrapper>
     );
 };

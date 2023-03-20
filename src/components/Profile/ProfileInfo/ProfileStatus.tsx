@@ -1,31 +1,44 @@
-import React from 'react';
+import React, {ChangeEvent} from 'react';
 import styled from "styled-components";
 
 type PropsType = {
     status: string
+    updateStatus:(status:string)=>void
 }
 
-export class ProfileStatus extends React.Component<any> {
+export class ProfileStatus extends React.Component<PropsType> {
+  //statusInputRef=React.createRef<HTMLInputElement>()
+
     state = {
-        editMode: false
+        editMode: false,
+         status:this.props.status
     }
 
-    activateEditMode() {
-        // this.state.editMode=true
-        // this.forceUpdate()
-        this.setState(
-            {
+    activateEditMode=()=> {
+              this.setState(
+            {...this.state,
                 editMode: true
             }
         )
     }
 
     deActivateEditMode() {
-        this.setState(
+              this.setState(
             {
                 editMode: false
             }
         )
+           this.props.updateStatus(this.state.status)
+        // if(this.statusInputRef.current){
+        //     console.log(this.statusInputRef.current.value)
+        //     this.props.updateStatus(this.statusInputRef.current.value)
+        //     this.statusInputRef.current.value=''
+        // }
+
+    }
+
+    onChangeHandler=(e:ChangeEvent<HTMLInputElement>)=>{
+              this.setState({status:e.currentTarget.value})
     }
 
     render() {
@@ -33,12 +46,15 @@ export class ProfileStatus extends React.Component<any> {
             <Wrapper>
                 {!this.state.editMode
                     ? <div>
-                    <span onDoubleClick={this.activateEditMode.bind(this)}>
-                         {this.props.status}
+                    <span onDoubleClick={this.activateEditMode}>
+                         {this.props.status?this.props.status:'hellow'}
                      </span>
                     </div>
                     : <div>
-                        <input type="text" onBlur={this.deActivateEditMode.bind(this)} autoFocus value={this.props.status}/>
+                        <input type="text"
+                               onChange={this.onChangeHandler}
+                                // ref={this.statusInputRef}
+                               onBlur={this.deActivateEditMode.bind(this)} autoFocus value={this.state.status}/>
                     </div>
                 }
             </Wrapper>

@@ -29,16 +29,48 @@ export const usersApi = {
                 return responce.data
             })
     },
-    getProfile(getItemResult:number){
+    getProfile(getItemResult: number) {
+        // return instance.get(`profile/${getItemResult}`)
+        //     .then((responce) => {
+        //         return responce.data
+        //     })
+        return profileApi.getProfile(getItemResult)
+    }
+}
+
+
+export const profileApi = {
+    getProfile(getItemResult: number) {
         return instance.get(`profile/${getItemResult}`)
             .then((responce) => {
                 return responce.data
             })
+    },
+    getStatus(userID: number) {
+        return instance.get(`/profile/status/${userID}`)
+            .then((responce) =>{
+                console.log(responce)
+                return  responce.data
+            })
+    },
+    updateStatus(status: string) {
+        console.log(status)
+           return instance.put(`profile/status`, {status:status})
+            // .then((responce) => {
+            //     return responce.data
+            // })
     }
+    // updateStatus(status: string) {
+    //     return instance.put(`/profile/status`, {status})
+    //         .then((responce) => {
+    //             return responce.data
+    //         })
+    // }
 }
 
-export const authAPI={
-    authMe(){
+
+export const authAPI = {
+    authMe() {
         return instance.get(`auth/me`)
             .then((responce) => {
                 return responce.data

@@ -1,7 +1,8 @@
 import {PostType} from "./store";
 import {Dispatch} from "redux";
-import {usersApi} from "../api/api";
+import {profileApi, usersApi} from "../api/api";
 import {followingInProgres, unFollow} from "./users-reducer";
+import {log} from "util";
 
 
 
@@ -31,6 +32,7 @@ export type profilePageType = {
     posts: PostType[]
     newPostText: string
     profile: UserProfileType | null
+    status:string|null
 }
 let initialState: profilePageType = {
     posts: [
@@ -46,7 +48,8 @@ let initialState: profilePageType = {
         },
     ],
     newPostText: 'it-Kamasutra',
-    profile: null
+    profile: null,
+    status:''
 }
 
 export const ProfileReducer = (state = initialState, action: mainType) => {
@@ -65,6 +68,9 @@ export const ProfileReducer = (state = initialState, action: mainType) => {
         case "SET_USER_POROFILE": {
             return {...state, profile: action.profile}
         }
+        case "SET_STATUS_PROFILE":{
+            return {...state,status:action.responce}
+        }
         default:
             return state
     }
@@ -72,7 +78,7 @@ export const ProfileReducer = (state = initialState, action: mainType) => {
 
 }
 
-type mainType = addPostACType | updatePostsACType | setUserProfileType
+type mainType = addPostACType | updatePostsACType | setUserProfileType |setStatusProfileType | updateProfileStatusType
 
 type addPostACType = ReturnType<typeof addPostAC>
 export const addPostAC = () => {
@@ -97,6 +103,7 @@ export const setUserProfile = (profile: any) => {
     } as const
 }
 
+
 export const setUserProfileThunkCreator = (getItemResult: number) => (dispatch: Dispatch) => {
      usersApi.getProfile(getItemResult)
         .then((responce) => {
@@ -105,6 +112,41 @@ export const setUserProfileThunkCreator = (getItemResult: number) => (dispatch: 
         )
 }
 
+
+type setStatusProfileType=ReturnType<typeof setStatusProfile>
+export const setStatusProfile=(responce:string)=>{
+    return{
+        type:"SET_STATUS_PROFILE",
+        responce
+    }as const
+}
+
+export const getUserProfileStatusThunkCreator=(getItemResult: number)=>(dispatch: Dispatch) => {
+    profileApi.getStatus(getItemResult)
+        .then((responce)=>{
+            console.log(responce)
+          dispatch(setStatusProfile(responce))
+        })
+}
+
+
+type updateProfileStatusType=ReturnType<typeof updateProfileStatus>
+export const updateProfileStatus=(status:string)=>{
+    return{
+        type:"UPDATE_STATUS_PROFILE",
+        status
+    }as const
+}
+
+export const updateProfileStatusThunkCreator = (status: string) => (dispatch: Dispatch) => {
+    profileApi.updateStatus(status)
+        .then(response => {
+            console.log(response)
+            if (response.data.resultCode === 0) {
+                dispatch(setStatusProfile(status))
+            }
+        })
+}
 
 //-----------------------------------------------------------
 
