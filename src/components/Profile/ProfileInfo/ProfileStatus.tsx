@@ -3,32 +3,33 @@ import styled from "styled-components";
 
 type PropsType = {
     status: string
-    updateStatus:(status:string)=>void
+    updateStatus: (status: string) => void
 }
 
 export class ProfileStatus extends React.Component<PropsType> {
-  //statusInputRef=React.createRef<HTMLInputElement>()
+    //statusInputRef=React.createRef<HTMLInputElement>()
 
     state = {
         editMode: false,
-         status:this.props.status
+        status: this.props.status
     }
 
-    activateEditMode=()=> {
-              this.setState(
-            {...this.state,
+    activateEditMode = () => {
+        this.setState(
+            {
+                ...this.state,
                 editMode: true
             }
         )
     }
 
     deActivateEditMode() {
-              this.setState(
+        this.setState(
             {
                 editMode: false
             }
         )
-           this.props.updateStatus(this.state.status)
+        this.props.updateStatus(this.state.status)
         // if(this.statusInputRef.current){
         //     console.log(this.statusInputRef.current.value)
         //     this.props.updateStatus(this.statusInputRef.current.value)
@@ -37,8 +38,16 @@ export class ProfileStatus extends React.Component<PropsType> {
 
     }
 
-    onChangeHandler=(e:ChangeEvent<HTMLInputElement>)=>{
-              this.setState({status:e.currentTarget.value})
+    onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        this.setState({status: e.currentTarget.value})
+    }
+
+    componentDidUpdate(prevProps: Readonly<PropsType>, prevState: Readonly<{}>, snapshot?: any) {
+        if (prevProps.status !== this.props.status) {
+            this.setState({
+                status: this.props.status
+            })
+        }
     }
 
     render() {
@@ -47,13 +56,13 @@ export class ProfileStatus extends React.Component<PropsType> {
                 {!this.state.editMode
                     ? <div>
                     <span onDoubleClick={this.activateEditMode}>
-                         {this.props.status?this.props.status:'hellow'}
+                         {this.props.status ? this.props.status : 'hellow'}
                      </span>
                     </div>
                     : <div>
                         <input type="text"
                                onChange={this.onChangeHandler}
-                                // ref={this.statusInputRef}
+                            // ref={this.statusInputRef}
                                onBlur={this.deActivateEditMode.bind(this)} autoFocus value={this.state.status}/>
                     </div>
                 }
