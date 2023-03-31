@@ -1,10 +1,6 @@
 import {PostType} from "./store";
 import {Dispatch} from "redux";
 import {profileApi, usersApi} from "../api/api";
-import {followingInProgres, unFollow} from "./users-reducer";
-import {log} from "util";
-
-
 
 export type UserProfileType = null | {
     aboutMe: string,
@@ -57,7 +53,7 @@ export const ProfileReducer = (state = initialState, action: mainType) => {
         case 'ADD_POST': {
             let newPost = {
                 id: 3,
-                message: state.newPostText,
+                message: action.message,
                 likesCount: 0
             }
             return {...state, posts: [...state.posts, newPost], newPostText: ''}
@@ -81,9 +77,10 @@ export const ProfileReducer = (state = initialState, action: mainType) => {
 type mainType = addPostACType | updatePostsACType | setUserProfileType |setStatusProfileType | updateProfileStatusType
 
 type addPostACType = ReturnType<typeof addPostAC>
-export const addPostAC = () => {
+export const addPostAC = (message:string) => {
     return {
-        type: 'ADD_POST'
+        type: 'ADD_POST',
+        message
     } as const
 }
 

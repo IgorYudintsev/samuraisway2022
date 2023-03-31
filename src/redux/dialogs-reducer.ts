@@ -7,7 +7,6 @@ const UPDATE_NEWPOSTTEXT = 'UPDATE-NEWPOSTTEXT'
 export type messagesPageType = {
     messages: MessageType[]
     dialogs: DialogsType[]
-    newMessageText: string
 }
 
 let initialState: messagesPageType = {
@@ -39,7 +38,6 @@ let initialState: messagesPageType = {
             message: 'Hellow'
         },
     ],
-    newMessageText: ''
 }
 
 export const DialogsReducer = (state = initialState, action: any) => {
@@ -47,7 +45,7 @@ export const DialogsReducer = (state = initialState, action: any) => {
         case SEND_MESSAGE: {
             let newPostText = {
                 id: 1,
-                message: state.newMessageText
+                message: action.message
             }
 
             return {...state, messages: [...state.messages, newPostText], newMessageText: ''}
@@ -60,14 +58,9 @@ export const DialogsReducer = (state = initialState, action: any) => {
     }
 };
 
-export const sendMessageAC = () => {
+export const sendMessageAC = (message: string) => {
     return {
         type: SEND_MESSAGE,
-    }
-}
-export const updateNewMessageBodyCreatorAC = (text: string) => {
-    return {
-        type: UPDATE_NEWPOSTTEXT,
-        newMessageText: text
+        message
     }
 }
