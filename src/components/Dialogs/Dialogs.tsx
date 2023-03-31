@@ -4,6 +4,7 @@ import {DialogItem} from "./DialogItem";
 import {Message} from "./Message";
 import {messagesPageType} from "../../redux/store";
 import {SubmitHandler, useForm} from "react-hook-form";
+import {CommonForm} from "../common/CommonForm";
 
 
 export type StateDialogsType = {
@@ -46,7 +47,9 @@ export const Dialogs = (props: StateDialogsType) => {
                 {/*    <button onClick={onSendmessageClickkhandler}>Add</button>*/}
                 {/*</div>*/}
 
-                <AddMessageForm onSubmitHandler={onSubmitHandler}/>
+                {/*<AddMessageForm onSubmitHandler={onSubmitHandler}/>*/}
+
+                <CommonForm onSubmitHandler={onSubmitHandler} textArea={false}/>
             </Right>
         </Wrapper>
     );
@@ -72,7 +75,7 @@ export const AddMessageForm = (props: AddMessageFormType) => {
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
             <div>
-                <input placeholder={'Enter your message'} {...register("message")} />
+                <input placeholder={'Enter your message'} {...register("message",{required: true})} />
             </div>
             <input type="submit"/>
         </form>

@@ -49,7 +49,7 @@ export const profileApi = {
     getStatus(userID: number) {
         return instance.get(`/profile/status/${userID}`)
             .then((responce) =>{
-                console.log(responce)
+                //console.log(responce)
                 return  responce.data
             })
     },
