@@ -1,16 +1,20 @@
 import React from 'react';
 import styled from "styled-components";
 import {NavLink} from "react-router-dom";
-import {InitialStateType} from "../../redux/auth-reducer";
+import {InitialStateType, logOutTC} from "../../redux/auth-reducer";
 
 type PropsType = {
     isAuth: boolean,
     login: string | null,
-    setUserData: (data: InitialStateType) => void
+    setUserData: (data: InitialStateType, isAuth: boolean) => void
+    logOutTC: () => void
 }
 
 
 export const Header = (props: PropsType) => {
+    const onClickHandler = () => {
+        props.logOutTC()
+    }
     return (
         <div className={'Header'}>
             <HeaderBlock>
@@ -20,7 +24,12 @@ export const Header = (props: PropsType) => {
                 </ImgWrapper>
                 <LoginBlock>
                     {props.isAuth
-                        ? props.login
+                        ? <div>
+                            {props.login}
+                            <div>
+                                <button onClick={onClickHandler}>LogOut</button>
+                            </div>
+                        </div>
                         : <NavLink to={'/login'}> Login </NavLink>
                     }
 

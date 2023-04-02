@@ -1,6 +1,10 @@
 import React from 'react';
 import {SubmitHandler, useForm} from "react-hook-form";
 import styled from "styled-components";
+import {useDispatch} from "react-redux";
+import {loginTC} from "../../redux/auth-reducer";
+import {useAppDispatch, useAppSelector} from "../../hooks/hook";
+import {Navigate} from "react-router-dom";
 
 type Inputs = {
     login: string,
@@ -10,10 +14,20 @@ type Inputs = {
 
 
 export const Login = () => {
-    const {register, handleSubmit, watch, formState: {errors}} = useForm<Inputs>();
-    const onSubmit: SubmitHandler<Inputs> = data => console.log(data);
+    let dispatch=useAppDispatch()
+    let isAuth = useAppSelector(state => state.auth.isAuth)
 
-    console.log(watch("login")) // watch input value by passing the name of it
+    const {register, handleSubmit, watch,reset, formState: {errors}} = useForm<Inputs>();
+
+    const onSubmit: SubmitHandler<Inputs> = (data) => {
+        dispatch(loginTC(data.login,data.password,data.rememberMe))
+        reset()
+    };
+
+
+    if(isAuth){
+        return <Navigate to={'/profile'}/>
+    }
 
     return (
         <Wrapper>
