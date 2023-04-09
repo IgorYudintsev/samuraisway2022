@@ -7,7 +7,7 @@ export const Navbar = () => {
         <div className={'Nav'}>
             <NavWrapper><NavLink to={'/profile'}> Profile</NavLink></NavWrapper>
             <NavWrapper><NavLink to={'/dialogs'}> Dialogs</NavLink></NavWrapper>
-            <NavWrapper><NavLink to={'/messages'}> Messages</NavLink></NavWrapper>
+            {/*<NavWrapper><NavLink to={'/messages'}> Messages</NavLink></NavWrapper>*/}
             <NavWrapper><NavLink to={'/news'}>News</NavLink></NavWrapper>
             <NavWrapper><NavLink to={'/music'}>Music</NavLink></NavWrapper>
             <NavWrapper><NavLink to={'/seetings'}>Seetings</NavLink></NavWrapper>

@@ -4,12 +4,14 @@ import {ProfileReducer} from "./profile-reducer";
 import {InitialStateType, UsersReducer} from "./users-reducer";
 import {AuthReducer} from "./auth-reducer";
 import thunk, {ThunkAction, ThunkDispatch} from "redux-thunk";
+import {AppReducer} from "./app-reducer";
 
 let reducers=combineReducers({
     dialogsPage: DialogsReducer,
     profilePage: ProfileReducer,
     usersPage:UsersReducer,
-    auth:AuthReducer
+    auth:AuthReducer,
+    app: AppReducer
 })
 export type reducersType=ReturnType<typeof reducers>
 export type storeType=typeof store

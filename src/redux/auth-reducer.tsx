@@ -41,7 +41,7 @@ export const setUserData = (data: InitialStateType, isAuth: boolean) => {
 }
 
 export const setUserProfileThunkCreator = () => (dispatch: Dispatch) => {
-    authAPI.authMe()
+ return    authAPI.authMe()
         .then((responce) => {
                 if (responce.resultCode === 0) {
                     console.log(responce.data)
