@@ -1,5 +1,12 @@
 import {InitialStateType} from "./users-reducer";
 import {reducersType} from "./redux-store";
+import {createSelector} from "reselect";
+
+// export const getUsersSelector=createSelector(getUsers,(users:any)=>{
+// return
+// }
+
+
 
 export const getUsers=(state:reducersType)=>{
     return state.usersPage.users
