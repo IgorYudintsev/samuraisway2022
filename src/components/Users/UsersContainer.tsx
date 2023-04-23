@@ -3,6 +3,7 @@ import React from 'react';
 import {
     follow,
     followThunkCreator,
+    followUnfollow,
     getUsersThunkCreator,
     setCurrentPage,
     unFollow,
@@ -27,8 +28,9 @@ type PropsType = {
     pageSize: number,
     totalUsersCount: number
     currentPage: number
-    follow: (userId: number) => void
-    unFollow: (userId: number) => void
+    // follow: (userId: number) => void
+    // unFollow: (userId: number) => void
+    followUnfollow:(userId: number,followUnfollowSwitcher: boolean)=>void
     setCurrentPage: (currentPage: number) => void
      isFetching: boolean
     followingInProgresValue: number[]
@@ -92,8 +94,9 @@ const mapStateToProps = (state: reducersType) => {
 
 export default connect(mapStateToProps,
     {
-        follow,
-        unFollow,
+        // follow,
+        // unFollow,
+        followUnfollow,
         setCurrentPage,
         getUsersThunkCreator,
         followThunkCreator,
@@ -118,6 +121,14 @@ export default connect(mapStateToProps,
 // import {reducersType} from "../../redux/redux-store";
 // import {Users} from "./Users";
 // import {Preloader} from "../common/Preloader";
+// import {
+//     getCurrentPage,
+//     getFollowingInProgresValue,
+//     getIsFetching,
+//     getPageSize,
+//     getTotalUsersCount,
+//     getUsers
+// } from "../../redux/users-selectors";
 //
 // type PropsType = {
 //     usersPage: UsersType[]
@@ -166,14 +177,26 @@ export default connect(mapStateToProps,
 //
 // const mapStateToProps = (state: reducersType) => {
 //     return {
-//         usersPage: state.usersPage.users,
-//         pageSize: state.usersPage.pageSize,
-//         totalUsersCount: state.usersPage.totalUsersCount,
-//         currentPage: state.usersPage.currentPage,
-//         isFetching: state.usersPage.isFetching,
-//         followingInProgresValue: state.usersPage.followingInProgres
+//         usersPage: getUsers(state),
+//         pageSize: getPageSize(state),
+//         totalUsersCount: getTotalUsersCount(state),
+//         currentPage: getCurrentPage(state),
+//         isFetching: getIsFetching(state),
+//         followingInProgresValue: getFollowingInProgresValue(state)
 //     }
 // }
+//
+//
+// // const mapStateToProps = (state: reducersType) => {
+// //     return {
+// //         usersPage: state.usersPage.users,
+// //         pageSize: state.usersPage.pageSize,
+// //         totalUsersCount: state.usersPage.totalUsersCount,
+// //         currentPage: state.usersPage.currentPage,
+// //         isFetching: state.usersPage.isFetching,
+// //         followingInProgresValue: state.usersPage.followingInProgres
+// //     }
+// // }
 //
 // export default connect(mapStateToProps,
 //     {
@@ -187,8 +210,4 @@ export default connect(mapStateToProps,
 // )(UsersContainer)
 
 //---------------------------------------------------------------------
-
-
-
-
 

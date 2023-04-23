@@ -1,65 +1,62 @@
 import React from 'react';
-import styled, {css} from "styled-components";
+import styled from "styled-components";
 import {avatar} from "../../assets/images/avatar";
-import {followThunkCreator, UsersType} from "../../redux/users-reducer";
 import {NavLink} from "react-router-dom";
-import axios from "axios";
-import {usersApi} from "../../api/api";
-import {Paginator} from "./Paginator";
-import {User} from "./User";
 
 type PropsType = {
-    totalUsersCount: number
-    pageSize: number
-    onPageChanged: (elPageNumber: number) => void
-    currentPage: number
-    usersPage: UsersType[]
+
     followingInProgresValue: number[]
-    followThunkCreator: (userID: number) => void
-    unFollowThunkCreator: (userID: number) => void
+
+    id: number
+    name: string
+    status: string
+    photoSmall: string
+    followed: boolean
+    followHandler: (userID: number) => void
+    UNfollowHandler: (userID: number) => void
 }
 
 
-export const Users = (props: PropsType) => {
-    const followHandler = (userID: number) => {
-        props.followThunkCreator(userID)
-    }
-
-    const UNfollowHandler = (userID: number) => {
-        props.unFollowThunkCreator(userID)
-    }
-
+export const User = (props: PropsType) => {
+    const {id,name,status, photoSmall, followed, followingInProgresValue,
+        followHandler, UNfollowHandler} = props
 
     return (
         <Wrapper>
-            <div>
-                <Paginator
-                    totalUsersCount={props.totalUsersCount}
-                    pageSize={props.pageSize}
-                    currentPage={props.currentPage}
-                    onPageChanged={props.onPageChanged}
-                />
-            </div>
-            {props.usersPage.map(el => {
-                localStorage.setItem('elId', JSON.stringify(el.id))
-                return (
-                    <User
-                        id={el.id}
-                        name={el.name}
-                        status={el.status}
-                        photoSmall={el.photos.small}
-                        followed={el.followed}
-                        followingInProgresValue={props.followingInProgresValue}
-                        followHandler={followHandler}
-                        UNfollowHandler={UNfollowHandler}
+            return (
+            <WrapperSide key={id}>
+                <LeftSide>
+                    {/*<NavLink to={`/profile/${el.id}`}>*/}
+                    <NavLink to={`/profile/${id}`}>
+                        <img src={photoSmall !== null ? photoSmall : avatar} alt="ava"/>
+                    </NavLink>
 
-                    />
+                    <div>
+                        {followed
+                            ? <button disabled={followingInProgresValue.some(sId => sId === id)}
+                                      onClick={() => UNfollowHandler(id)}>Follow</button>
+                            : <button disabled={props.followingInProgresValue.some(id => id === id)}
+                                      onClick={() => followHandler(id)}>UnFollow</button>
+                        }
+                    </div>
 
-                )
-            })}
+                </LeftSide>
+                <RightSide>
+                    <DivForMargin>
+                        <div>{id}</div>
+                        <div>{name}</div>
+                        <div>{status}</div>
+                        {/*<div>{el.location.city}</div>*/}
+                        {/*<div>{el.location.counry}</div>*/}
+                    </DivForMargin>
+                </RightSide>
+            </WrapperSide>
+            )
+            {/*})}*/}
         </Wrapper>
     );
 };
+
 
 
 const Wrapper = styled.div`
@@ -67,6 +64,36 @@ const Wrapper = styled.div`
   //background-color: chartreuse;
 `
 
+const WrapperSide = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  //height: 100px;
+  //background-color: #ecb4c6;
+  margin-bottom: 10px;
+`
+
+const LeftSide = styled.div`
+  //background-color: #f5f50a;
+  min-width: 5%;
+  margin-bottom: 10px;
+  text-align: center;
+
+  & > a > img {
+    width: 50px;
+  }
+`
+
+const RightSide = styled.div`
+  //background-color: #1e3786;
+  width: 95%;
+  margin-bottom: 10px;
+`
+
+const DivForMargin = styled.div`
+  //background-color: #1e3786;
+  margin-left: 15px;
+`
 
 //-------------------------------------------------------------------------------------------------
 
@@ -77,7 +104,6 @@ const Wrapper = styled.div`
 // import {NavLink} from "react-router-dom";
 // import axios from "axios";
 // import {usersApi} from "../../api/api";
-// import {Paginator} from "./Paginator";
 //
 // type PropsType = {
 //     totalUsersCount: number
@@ -95,11 +121,11 @@ const Wrapper = styled.div`
 //
 //
 // export const Users = (props: PropsType) => {
-//     // let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize)
-//     // let pages = []
-//     // for (let i = 1; i <= pagesCount; i++) {
-//     //     pages.push(i)
-//     // }
+//     let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize)
+//     let pages = []
+//     for (let i = 1; i <= pagesCount; i++) {
+//         pages.push(i)
+//     }
 //
 //     const followHandler = (userID: number) => {
 //         props.followThunkCreator(userID)
@@ -113,20 +139,14 @@ const Wrapper = styled.div`
 //     return (
 //         <Wrapper>
 //             <div>
-//                 <Paginator
-//                     totalUsersCount={props.totalUsersCount}
-//                     pageSize={props.pageSize}
-//                     currentPage={props.currentPage}
-//                     onPageChanged={props.onPageChanged}
-//                 />
-//                 {/*{pages.map(el => {*/}
-//                 {/*    return (*/}
-//                 {/*        <PageSpanpaginator key={el} onClick={() => props.onPageChanged(el)}*/}
-//                 {/*                           boldNumber={props.currentPage === el}>*/}
-//                 {/*            {el}*/}
-//                 {/*        </PageSpanpaginator>*/}
-//                 {/*    )*/}
-//                 {/*})}*/}
+//                 {pages.map(el => {
+//                     return (
+//                         <PageSpanpaginator key={el} onClick={() => props.onPageChanged(el)}
+//                                            boldNumber={props.currentPage === el}>
+//                             {el}
+//                         </PageSpanpaginator>
+//                     )
+//                 })}
 //             </div>
 //             {props.usersPage.map(el => {
 //                 localStorage.setItem('elId', JSON.stringify(el.id))
@@ -157,7 +177,9 @@ const Wrapper = styled.div`
 //                                 {/*<div>{el.location.counry}</div>*/}
 //                             </DivForMargin>
 //                         </RightSide>
+//
 //                     </WrapperSide>
+//
 //                 )
 //             })}
 //         </Wrapper>
@@ -165,18 +187,18 @@ const Wrapper = styled.div`
 // };
 //
 //
-// // type boldNumberType = {
-// //     boldNumber: boolean
-// // }
+// type boldNumberType = {
+//     boldNumber: boolean
+// }
 //
-// // const PageSpanpaginator = styled.span<boldNumberType>`
-// //   cursor: pointer;
-// //   ${props => props.boldNumber && css`
-// //     font-weight: bold;
-// //     font-size: 20px;
-// //   `
-// //   }
-// // `
+// const PageSpanpaginator = styled.span<boldNumberType>`
+//   cursor: pointer;
+//   ${props => props.boldNumber && css`
+//     font-weight: bold;
+//     font-size: 20px;
+//   `
+// }
+// `
 //
 // const Wrapper = styled.div`
 //   max-width: 400px;
