@@ -38,6 +38,7 @@ export const Users = (props: PropsType) => {
                     pageSize={props.pageSize}
                     currentPage={props.currentPage}
                     onPageChanged={props.onPageChanged}
+                    portionSize={10}
                 />
             </div>
             {props.usersPage.map(el => {
