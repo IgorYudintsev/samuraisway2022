@@ -67,6 +67,10 @@ export const ProfileReducer = (state = initialState, action: mainType) => {
         case "PROFILE/SET_STATUS_PROFILE": {
             return {...state, status: action.responce}
         }
+        case "PROFILE/UPDATE_PHOTOS": {
+            console.log('photos')
+            return {...state, profile: {...state.profile, photos: action.photos}}
+        }
         default:
             return state
     }
@@ -74,7 +78,13 @@ export const ProfileReducer = (state = initialState, action: mainType) => {
 
 }
 
-type mainType = addPostACType | updatePostsACType | setUserProfileType | setStatusProfileType | updateProfileStatusType
+type mainType =
+    addPostACType
+    | updatePostsACType
+    | setUserProfileType
+    | setStatusProfileType
+    | updateProfileStatusType
+    | setPhotoType
 
 type addPostACType = ReturnType<typeof addPostAC>
 export const addPostAC = (message: string) => {
@@ -121,9 +131,9 @@ export const setStatusProfile = (responce: string) => {
 
 export const getUserProfileStatusThunkCreator = (getItemResult: number) => async (dispatch: Dispatch) => {
     try {
-        let res=await  profileApi.getStatus(getItemResult)
+        let res = await profileApi.getStatus(getItemResult)
         dispatch(setStatusProfile(res))
-    } catch(e) {
+    } catch (e) {
         console.log(e)
     }
 }
@@ -136,17 +146,37 @@ export const updateProfileStatus = (status: string) => {
     } as const
 }
 
-export const updateProfileStatusThunkCreator=(status: string)=>async(dispatch: Dispatch)=>{
-    try{
-        let res= await profileApi.updateStatus(status)
+export const updateProfileStatusThunkCreator = (status: string) => async (dispatch: Dispatch) => {
+    try {
+        let res = await profileApi.updateStatus(status)
         if (res.data.resultCode === 0) {
             dispatch(setStatusProfile(status))
         }
-    }catch(e){
+    } catch (e) {
         console.log(e)
     }
-
 }
+
+type setPhotoType = ReturnType<typeof setPhoto>
+export const setPhoto = (photos: { photos: { small: string, large: string } }) => {
+    return {
+        type: "PROFILE/UPDATE_PHOTOS",
+        photos
+    } as const
+}
+
+export const savePhotoThunkCreator = (file: string) => async (dispatch: Dispatch) => {
+    //debugger
+    try {
+        let res = await profileApi.savePhoto(file)
+        if (res.data.resultCode === 0) {
+            dispatch(setPhoto(res.data.data.photos))
+        }
+    } catch {
+
+    }
+}
+
 
 //-----------------------------------------------------------
 

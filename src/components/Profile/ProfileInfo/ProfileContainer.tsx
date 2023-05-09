@@ -3,7 +3,7 @@ import {Profile} from "./Profile";
 import {reducersType} from "../../../redux/redux-store";
 import {connect} from "react-redux";
 import {
-    getUserProfileStatusThunkCreator,
+    getUserProfileStatusThunkCreator, savePhotoThunkCreator,
     setUserProfile,
     setUserProfileThunkCreator, updateProfileStatusThunkCreator,
     UserProfileType
@@ -21,36 +21,33 @@ type PropsType = {
     setUserProfileThunkCreator: (getItemResult: number | null) => void
     getUserProfileStatusThunkCreator: (getItemResult: number | null) => void
     updateProfileStatusThunkCreator: (status: string) => void
+    savePhotoThunkCreator:(file: File) => void,
 }
 
 
 export class ProfileContainer extends React.Component<PropsType> {
 
-    // componentDidMount() {
-    //     let getItemResult
-    //     // let getItem = localStorage.getItem('elId')
-    //     let getItem = localStorage.getItem('elId')
-    //     // if (getItem !== null) getItemResult = JSON.parse(getItem)
-    //     if (getItem !== null) getItemResult = JSON.parse(getItem)
-    //     this.props.setUserProfileThunkCreator(getItemResult)
-    //     this.props.getUserProfileStatusThunkCreator(getItemResult)
-    // }
+    refreshProfile() {
+        this.props.setUserProfileThunkCreator(11593)
+        this.props.getUserProfileStatusThunkCreator(11593)
+    }
 
     componentDidMount() {
-        console.log(this.props.userId)
         let getItemResult
         // let getItem = localStorage.getItem('elId')
         let getItem = localStorage.getItem('elId')
         // if (getItem !== null) getItemResult = JSON.parse(getItem)
         if (getItem !== null) getItemResult = JSON.parse(getItem)
-        this.props.setUserProfileThunkCreator(11593)
-        this.props.getUserProfileStatusThunkCreator(11593)
+
+        this.refreshProfile()
     }
 
-    // componentDidUpdate(prevProps: Readonly<PropsType>, prevState: Readonly<{}>, snapshot?: any) {
-    //     this.props.setUserProfileThunkCreator(this.props.userId)
-    //     this.props.getUserProfileStatusThunkCreator(this.props.userId)
-    // }
+    componentDidUpdate(prevProps: Readonly<PropsType>, prevState: Readonly<{}>, snapshot?: any) {
+        if(this.props.userId!==prevProps.userId){
+            this.refreshProfile()
+        }
+
+    }
 
     //11593
 
@@ -59,9 +56,11 @@ export class ProfileContainer extends React.Component<PropsType> {
         return (
             <div>
                 <Profile
+                    isOwner={!this.props.userId}
                     userProfile={this.props.userProfile}
                     status={this.props.status}
                     updateProfileStatusThunkCreator={this.props.updateProfileStatusThunkCreator}
+                    savePhoto={this.props.savePhotoThunkCreator}
                 />
             </div>
 
@@ -84,7 +83,8 @@ export default compose(
         setUserProfile,
         setUserProfileThunkCreator,
         getUserProfileStatusThunkCreator,
-        updateProfileStatusThunkCreator
+        updateProfileStatusThunkCreator,
+        savePhotoThunkCreator
     }),
     WithAuthRedirectComponent
 )(ProfileContainer)
