@@ -1,5 +1,5 @@
 import {Dispatch} from "redux";
-import {authAPI} from "../api/api";
+import {authAPI, securityAPI} from "../api/api";
 import {AppDispatch} from "./redux-store";
 
 let initialState: InitialStateType = {
@@ -7,7 +7,8 @@ let initialState: InitialStateType = {
     email: null,
     login: null,
     isAuth: false,
-    errorMessage:null
+    errorMessage: null,
+    captchaURL: null
 }
 
 export type InitialStateType = {
@@ -15,7 +16,8 @@ export type InitialStateType = {
     email: string | null,
     login: string | null,
     isAuth: boolean,
-    errorMessage:string | null,
+    errorMessage: string | null,
+    captchaURL: string | null
 }
 
 export const AuthReducer = (state = initialState, action: AuthReducerActionType) => {
@@ -23,12 +25,15 @@ export const AuthReducer = (state = initialState, action: AuthReducerActionType)
         case "AUTH/SET_USER_DATA": {
             return {...state, ...action.payload.data, isAuth: action.payload.isAuth}
         }
+        case "AUTH/SECURITY-CAPTCHA": {
+            return {...state, captchaURL: action.payload.captcha}
+        }
         default:
             return state
     }
 }
 
-type AuthReducerActionType = setUserDataType
+type AuthReducerActionType = setUserDataType | securityAPIACType
 
 type setUserDataType = ReturnType<typeof setUserData>
 export const setUserData = (data: InitialStateType, isAuth: boolean) => {
@@ -39,24 +44,33 @@ export const setUserData = (data: InitialStateType, isAuth: boolean) => {
 }
 
 export const setUserProfileThunkCreator = () => (dispatch: Dispatch) => {
- return    authAPI.authMe()
+    return authAPI.authMe()
         .then((responce) => {
                 if (responce.resultCode === 0) {
-                                     dispatch(setUserData(responce.data, true))
+                    dispatch(setUserData(responce.data, true))
                 }
             }
         )
 }
 
-export const loginTC = (email: string, password: string, rememberMe: boolean) => async (dispatch:AppDispatch) => {
+export const loginTC = (email: string, password: string, rememberMe: boolean,captcha:string|null) => async (dispatch: AppDispatch) => {
     try {
-        let result = await authAPI.loginMe(email, password, rememberMe)
+        let result = await authAPI.loginMe(email, password, rememberMe,captcha)
         if (result.data.resultCode === 0) {
 
             dispatch(setUserProfileThunkCreator())
-        }else {
-            console.log(result.data.messages[0])
-            let data = {userId: null, login: null, email: null, isAuth: false,errorMessage:result.data.messages[0]}
+        }  else {
+        if (result.data.resultCode === 10) {
+                dispatch(securityAPIThunkCreator())
+            }
+            let data = {
+                captchaURL: null,
+                userId: null,
+                login: null,
+                email: null,
+                isAuth: false,
+                errorMessage: result.data.messages[0]
+            }
             dispatch(setUserData(data, false))
         }
     } catch (e) {
@@ -68,10 +82,30 @@ export const logOutTC = () => async (dispatch: Dispatch) => {
     try {
         let result = await authAPI.logOut()
         if (result.data.resultCode === 0) {
-            let data = {userId: null, login: null, email: null, isAuth: false,errorMessage:null}
+            let data = {captchaURL: null, userId: null, login: null, email: null, isAuth: false, errorMessage: null}
             dispatch(setUserData(data, false))
         }
     } catch (e) {
         console.log(e)
+    }
+}
+
+type securityAPIACType = ReturnType<typeof securityAPIAC>
+const securityAPIAC = (captcha: string) => {
+    return {
+        type: "AUTH/SECURITY-CAPTCHA",
+        payload: {
+            captcha
+        }
+    } as const
+}
+
+
+export const securityAPIThunkCreator = () => async (dispatch: Dispatch) => {
+    try {
+        let res = await securityAPI.getCaptcha()
+        dispatch(securityAPIAC(res.url))
+    } catch {
+
     }
 }

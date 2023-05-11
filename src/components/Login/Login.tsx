@@ -9,19 +9,21 @@ import {Navigate} from "react-router-dom";
 type Inputs = {
     login: string,
     password: string,
-    rememberMe: boolean
+    rememberMe: boolean,
+    captcha:string
 };
 
 
 export const Login = () => {
     let dispatch = useAppDispatch()
     let isAuth = useAppSelector(state => state.auth.isAuth)
+    const isCaptcha=useAppSelector(state => state.auth.captchaURL)
     let errorMessage = useAppSelector(state => state.auth.errorMessage)
 
     const {register, handleSubmit, watch, reset, formState: {errors}} = useForm<Inputs>();
 
     const onSubmit: SubmitHandler<Inputs> = (data) => {
-        dispatch(loginTC(data.login, data.password, data.rememberMe))
+        dispatch(loginTC(data.login, data.password, data.rememberMe,data.captcha))
         reset()
     };
 
@@ -55,6 +57,15 @@ export const Login = () => {
 
                     {/* errors will return when field validation fails  */}
                     {errors.password && <span>This field is required</span>}
+
+                    { isCaptcha &&
+                        <div>
+                            <img src={isCaptcha} alt="captcha" />
+                            <input placeholder={'captcha'}  {...register("captcha", )} />
+                        </div>
+
+
+                    }
 
                     <input type="submit"/>
                 </form>

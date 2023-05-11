@@ -73,12 +73,6 @@ export const profileApi = {
     saveProfile(data:any){
         return instance.put(`profile`,data)
     }
-    // updateStatus(status: string) {
-    //     return instance.put(`/profile/status`, {status})
-    //         .then((responce) => {
-    //             return responce.data
-    //         })
-    // }
 }
 
 
@@ -89,36 +83,22 @@ export const authAPI = {
                 return responce.data
             })
     },
-    loginMe(email:string,password:string,rememberMe:boolean){
-        return instance.post(`auth/login`,{email,password,rememberMe})
+    loginMe(email:string,password:string,rememberMe:boolean,captcha:string|null){
+        return instance.post(`auth/login`,{email,password,rememberMe,captcha})
     },
     logOut(){
         return instance.delete(`auth/login`)
     }
+}
 
+export const securityAPI = {
+    getCaptcha() {
+        return instance.get(`security/get-captcha-url`)
+            .then((responce) => {
+                return responce.data
+            })
+    }
 }
 
 
-//-----------------------------------------------2--------------------------------------
-// export const getUsers = (pageSize: number, currentPage: number) => {
-//     return instance.get(`users?count=${pageSize}&page=${currentPage}`,
-//         {withCredentials: true}
-//     )
-//         .then((responce) => {
-//                 return responce.data
-//             }
-//         )
-// }
-
-
-//--------------------------------------------------1--------------------------------------
-// export const getUsers = (pageSize: number, currentPage: number) => {
-//     return axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${pageSize}&page=${currentPage}`,
-//         {withCredentials: true}
-//     )
-//         .then((responce) => {
-//                 return responce.data
-//             }
-//         )
-// }
 
