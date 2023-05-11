@@ -32,7 +32,6 @@ type AuthReducerActionType = setUserDataType
 
 type setUserDataType = ReturnType<typeof setUserData>
 export const setUserData = (data: InitialStateType, isAuth: boolean) => {
-    console.log(data)
     return {
         type: "AUTH/SET_USER_DATA",
         payload: {data, isAuth}
@@ -43,8 +42,7 @@ export const setUserProfileThunkCreator = () => (dispatch: Dispatch) => {
  return    authAPI.authMe()
         .then((responce) => {
                 if (responce.resultCode === 0) {
-                    console.log(responce.data)
-                    dispatch(setUserData(responce.data, true))
+                                     dispatch(setUserData(responce.data, true))
                 }
             }
         )

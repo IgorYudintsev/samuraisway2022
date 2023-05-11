@@ -70,6 +70,9 @@ export const profileApi = {
             }
         );
     },
+    saveProfile(data:any){
+        return instance.put(`profile`,data)
+    }
     // updateStatus(status: string) {
     //     return instance.put(`/profile/status`, {status})
     //         .then((responce) => {

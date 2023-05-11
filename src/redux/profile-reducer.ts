@@ -1,19 +1,11 @@
 import {PostType} from "./store";
 import {Dispatch} from "redux";
 import {profileApi, usersApi} from "../api/api";
+import {AppDispatch, RootState} from "./redux-store";
 
-export type UserProfileType = null | {
+export type UserProfileType = {
     aboutMe: string,
-    contacts: {
-        facebook: string,
-        website: null | string,
-        vk: string,
-        twitter: string,
-        instagram: string,
-        youtube: null | string,
-        github: string,
-        mainLink: null | string,
-    },
+    contacts: ContactsType,
     lookingForAJob: boolean,
     lookingForAJobDescription: string,
     fullName: string,
@@ -22,6 +14,18 @@ export type UserProfileType = null | {
         small: string,
         large: string,
     }
+}
+
+export type ContactsType = {
+    [key: string]: string | null
+    // facebook: string
+    // website: string
+    // vk: string
+    // twitter: string
+    // instagram: string
+    // youtube: string
+    // github: string
+    // mainLink: string
 }
 
 export type profilePageType = {
@@ -166,12 +170,25 @@ export const setPhoto = (photos: { photos: { small: string, large: string } }) =
 }
 
 export const savePhotoThunkCreator = (file: string) => async (dispatch: Dispatch) => {
-    //debugger
     try {
         let res = await profileApi.savePhoto(file)
         if (res.data.resultCode === 0) {
             dispatch(setPhoto(res.data.data.photos))
         }
+    } catch {
+
+    }
+}
+
+
+export const saveProfileThunkCreator = (data: any) => async (dispatch: AppDispatch, getState: () => RootState) => {
+    let userID: null | number = getState().auth!.userId
+    console.log(userID)
+    try {
+        let res = await profileApi.saveProfile(data)
+        if (res.data.resultCode === 0) {
+            dispatch(setUserProfileThunkCreator(11593))
+                 }
     } catch {
 
     }
